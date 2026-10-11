@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Mi Academia</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#111114" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Academia">
+<style>
+:root{--bg:#f5f5f7;--card:#fff;--ink:#1d1d1f;--mut:#6e6e73;--line:#e3e3e8;--acc:#0b5fd6;--ok:#1b7f45;--okbg:#e6f4ec;--mej:#b45a00;--mejbg:#fdf0e1;--r:16px}
+:root[data-theme=dark]{--bg:#111114;--card:#1c1c20;--ink:#f5f5f7;--mut:#a1a1a8;--line:#2c2c31;--acc:#6aa8ff;--ok:#5fd08b;--okbg:#12301f;--mej:#f0a24a;--mejbg:#35240f}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#111114;--card:#1c1c20;--ink:#f5f5f7;--mut:#a1a1a8;--line:#2c2c31;--acc:#6aa8ff;--ok:#5fd08b;--okbg:#12301f;--mej:#f0a24a;--mejbg:#35240f}}
+*{box-sizing:border-box}
+html{font-size:100%;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;padding-top:env(safe-area-inset-top)}
+main{max-width:720px;margin:0 auto;padding:16px 16px calc(90px + env(safe-area-inset-bottom))}
+h1{font-size:1.6rem;margin:.2em 0 .4em;line-height:1.2}h2{font-size:1.2rem;margin:1.2em 0 .4em}h3{font-size:1.05rem;margin:1em 0 .3em}
+p{margin:.5em 0}a{color:var(--acc)}small,.mut{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:12px 0}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.grow{flex:1;min-width:0}
+button,.btn{font:inherit;min-height:44px;padding:0 18px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+button.pri,.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+button.chip{min-height:44px;border-radius:999px}button.on{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+select,input[type=text],input[type=search]{font:inherit;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 12px;width:100%}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav.tabs a{flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--mut);font-size:.9rem}
+nav.tabs a[aria-current=page]{color:var(--acc);font-weight:600}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.8rem;background:var(--bg);color:var(--mut)}
+.tag.ok{background:var(--okbg);color:var(--ok)}.tag.mej{background:var(--mejbg);color:var(--mej)}
+.warn{background:var(--mejbg);color:var(--mej);border-radius:12px;padding:8px 12px;margin:6px 0;font-size:.92rem}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}.bar>i{display:block;height:100%;background:var(--ok)}
+.units{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.units a,.units span{min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.units span{color:var(--mut);border-style:dashed}
+.drop{border:2px dashed var(--line);border-radius:var(--r);padding:28px 16px;text-align:center}.drop.over{border-color:var(--acc);background:var(--bg)}
+.tw{overflow-x:auto;margin:10px 0}table{border-collapse:collapse;min-width:100%}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--bg)}
+details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}
+code{background:var(--bg);padding:1px 5px;border-radius:6px}
+.verif{background:var(--mejbg);color:var(--mej);border-radius:6px;padding:0 6px;font-weight:600;text-decoration:none}.verif small{font-weight:400;color:inherit}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:9}
+.blk{border-left:4px solid var(--line);padding:4px 12px;margin:10px 0}.blk.tip{border-color:var(--ok)}.blk.warning,.blk.exam{border-color:var(--mej)}
+.opt{display:flex;gap:10px;align-items:flex-start;min-height:44px;padding:6px 0}.opt input{width:22px;height:22px;margin-top:2px}.proc{display:flex;flex-wrap:wrap;gap:8px;padding-left:20px}.au{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}figure{margin:10px 0}textarea{width:100%}label select,label input[type=text]{margin:4px 0 10px}
+.dots{display:flex;gap:6px}.dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line)}.dots i.on{background:var(--ok);border-color:var(--ok)}.dots i.hoy{outline:2px solid var(--acc);outline-offset:2px}
+.conf{position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden}.conf span{position:absolute;top:-30px;font-size:1.6rem;animation:cae 1.8s ease-in forwards}@keyframes cae{to{transform:translateY(105vh) rotate(360deg);opacity:.9}}
+.curso{display:block;text-decoration:none;color:inherit}.urow{display:flex;gap:10px;align-items:center;min-height:44px;padding:6px 4px;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}.urow.lock{opacity:.55}.urow.ok b{color:var(--ok)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<nav class="tabs" aria-label="Principal">
+<a href="#/inicio" data-tab="inicio">Inicio</a><a href="#/repaso" data-tab="repaso">Repaso</a><a href="#/biblioteca" data-tab="biblioteca">Biblioteca</a><a href="#/buscar" data-tab="buscar">Buscar</a><a href="#/perfil" data-tab="perfil">Perfil</a>
+</nav>
+<script>
+'use strict';
+/* ============ 1. CONFIGURACIÓN ============ */
+const DB_NAME = 'academia-ingles-v1', LS_KEY = 'academia-ingles-v1:estado';
+/* Modo embebido (opcional): build.py coloca aquí uno o varios .md. Lo importado gana en conflictos. */
+const COURSE_MD = ``;
+const METAS = {academic:'IELTS Academic', general:'IELTS General', toefl:'TOEFL iBT'};
+const PASOS = ['Objetivos','Repaso rápido','Vocabulario','Gramática','Texto o diálogo modelo','Cuidado','Módulo de examen','Ejercicios','Hablar y escribir','Lista de verificación','Tarea de aplicación','Evaluación de la unidad'];
+const Q_TIPOS = ['mcq','mcq-multi','tfng','ynng','fill','fillbank','match','short','order','label','repeat','open','speak','write'];
+const Q_ABIERTAS = ['open','speak','write'];
+const BLOQUES = ['box','vocab','pron','table','passage','audio','image','chart','process','q','checklist','model-answer','exam'];
+
+/* ============ 2. UTILIDADES ============ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+const pad2 = n => String(n).padStart(2,'0');
+function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3200); }
+
+/* ---- Markdown mínimo y seguro (todo se escapa antes) ---- */
+function inline(t){
+  let s = esc(t);
+  s = s.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/(^|[^*])\*([^*\s][^*]*)\*/g,'$1<i>$2</i>');
+  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  return s.replace(/VERIFICAR/g,'<a class="verif" href="#/nota-verificar">VERIFICAR<small> en el sitio oficial</small></a>');
+}
+function md(text){
+  const L = String(text).split('\n'); let out = '', i = 0;
+  while(i < L.length){
+    const l = L[i];
+    if(!l.trim()){ i++; continue; }
+    if(/^\s*\|/.test(l)){ const r=[]; while(i<L.length && /^\s*\|/.test(L[i])) r.push(L[i++]); out += renderTabla(parseTabla(r)); continue; }
+    let m;
+    if((m=/^(#{2,6})\s+(.*)$/.exec(l))){ out += `<h3>${inline(m[2])}</h3>`; i++; continue; }
+    if(/^\s*[-*]\s+/.test(l)){ out+='<ul>'; while(i<L.length && /^\s*[-*]\s+/.test(L[i])) out+=`<li>${inline(L[i++].replace(/^\s*[-*]\s+/,''))}</li>`; out+='</ul>'; continue; }
+    if(/^\s*\d+[.)]\s+/.test(l)){ out+='<ol>'; while(i<L.length && /^\s*\d+[.)]\s+/.test(L[i])) out+=`<li>${inline(L[i++].replace(/^\s*\d+[.)]\s+/,''))}</li>`; out+='</ol>'; continue; }
+    const p=[]; while(i<L.length && L[i].trim() && !/^\s*(\||[-*]\s|\d+[.)]\s|#)/.test(L[i])) p.push(L[i++]);
+    if(!p.length){ p.push(L[i++]); }
+    out += `<p>${inline(p.join(' '))}</p>`;
+  }
+  return out;
+}
+
+/* ============ 3. PARSER (Formato Academia) ============ */
+/*PARSER-START*/
+/* Atributos clave=valor con o sin comillas (rectas o tipográficas) */
+function parseAttrs(s){
+  const a = {}, re = /([\w-]+)\s*=\s*(?:"([^"]*)"|“([^”]*)”|'([^']*)'|([^\s"“']+))/g; let m;
+  while((m = re.exec(s||''))) a[m[1].toLowerCase()] = m[2] ?? m[3] ?? m[4] ?? m[5] ?? '';
+  return a;
+}
+function parseMetaLine(s){ const o={}; String(s).split('|').forEach(p=>{ const m=/^\s*([\w-]+)\s*=\s*(.*?)\s*$/.exec(p); if(m) o[m[1].toLowerCase()]=m[2]; }); return o; }
+
+/* Tabla Markdown con {colspan=n}/{rowspan=n} al inicio de la celda */
+function parseTabla(rows){
+  const out = [];
+  rows.forEach(r=>{
+    if(/^\s*\|?[\s:|-]+\|?\s*$/.test(r) && /-/.test(r)) return;
+    const cells = r.trim().replace(/^\|/,'').replace(/\|$/,'').split('|').map(c=>{
+      c = c.trim(); let cs=1, rs=1;
+      const m = /^\{([^}]*)\}\s*/.exec(c);
+      if(m){ const a=parseAttrs(m[1]); cs=+a.colspan||1; rs=+a.rowspan||1; c=c.slice(m[0].length); }
+      return {t:c, cs, rs};
+    });
+    out.push(cells);
+  });
+  return out;
+}
+function renderTabla(rows){
+  if(!rows.length) return '';
+  const row = (r,h) => '<tr>'+r.map(c=>`<${h?'th':'td'}${c.cs>1?` colspan="${c.cs}"`:''}${c.rs>1?` rowspan="${c.rs}"`:''}>${inline(c.t)}</${h?'th':'td'}>`).join('')+'</tr>';
+  return `<div class="tw"><table><thead>${row(rows[0],true)}</thead><tbody>${rows.slice(1).map(r=>row(r,false)).join('')}</tbody></table></div>`;
+}
+
+const CAMPOS = {
+  q: ['stem','options','answer','accept','limit','bank','pairs','items','target','turns','rubric','key_ideas','min_words','time_sec','sample','explain'],
+  pron: ['tip','pares'], audio: ['speakers'], image: ['prompt','uso'], chart: ['labels','series']
+};
+/* Lee campos "nombre: valor" con líneas de continuación; "series" puede repetirse */
+function parseCampos(tipo, body){
+  const set = CAMPOS[tipo], re = new RegExp('^\\s*('+set.join('|')+')\\s*:\\s*(.*)$','i');
+  const f = {}; let cur = null; const extra = [];
+  body.forEach(l=>{
+    const m = re.exec(l);
+    if(m){ cur = m[1].toLowerCase(); if(cur==='series'){ (f.series ||= []).push(m[2]); } else f[cur] = m[2]; }
+    else if(cur && cur!=='series' && l.trim()) f[cur] += '\n'+l.trim();
+    else if(l.trim()) extra.push(l);
+  });
+  return {f, extra};
+}
+const lista = s => String(s||'').split(/[,;\n]/).map(x=>x.trim()).filter(Boolean);
+
+function parseBloque(tipo, attrs, body){
+  const b = {type:tipo, attrs, id:attrs.id||null, raw:body.join('\n')};
+  if(tipo==='q'){
+    const {f} = parseCampos('q', body);
+    b.qtype = (attrs.type||'').toLowerCase(); b.f = f;
+    b.options = []; const re=/(?:^|\n)\s*[-*]?\s*\(?([a-hA-H])[).]\s+(.*)/g; let m;
+    while((m=re.exec(f.options||''))) b.options.push({k:m[1].toLowerCase(), t:m[2].trim()});
+    b.accept = lista(f.accept);
+    const mw = /\d+/.exec(f.min_words||''); b.minWords = mw ? +mw[0] : null;
+    const ts = /time_sec\s*[:=]?\s*(\d+)/i.exec((f.min_words||'')+' '+(f.time_sec||'')) || /^\s*(\d+)/.exec(f.time_sec||'');
+    b.timeSec = ts ? +ts[1] : null;
+  } else if(tipo==='audio'){
+    const {f} = parseCampos('audio', body); b.speakers = f.speakers||''; b.turns = [];
+    body.forEach(l=>{ const m=/^\s*([A-Za-z]):\s*(.*)$/.exec(l); if(m) b.turns.push({who:m[1].toUpperCase(), text:m[2]}); });
+  } else if(tipo==='pron'){
+    const {f} = parseCampos('pron', body); b.tip=f.tip||''; b.pares=lista(f.pares).map(p=>p.split(/\s*[-–]\s*/));
+  } else if(tipo==='image'){ b.f = parseCampos('image', body).f;
+  } else if(tipo==='chart'){
+    const {f} = parseCampos('chart', body); b.labels = lista(f.labels);
+    b.series = (f.series||[]).map(s=>{ const m=/^\s*(.*?)\s*=\s*(.*)$/.exec(s); return m ? {name:m[1], vals:lista(m[2]).map(Number)} : {name:'', vals:lista(s).map(Number)}; });
+  } else if(tipo==='vocab'){
+    b.rows = body.filter(l=>l.trim() && l.includes('|')).map(l=>{ const c=l.split('|').map(x=>x.trim()); return {term:c[0],ipa:c[1]||'',es:c[2]||'',ex:c[3]||'',col:c[4]||''}; });
+  } else if(tipo==='table'){ b.rows = parseTabla(body.filter(l=>/^\s*\|/.test(l)));
+  } else if(tipo==='process'){ b.steps = body.filter(l=>/^\s*\d+[.)]/.test(l)).map(l=>l.replace(/^\s*\d+[.)]\s*/,''));
+  } else if(tipo==='checklist'){ b.items = body.filter(l=>l.trim()).map(l=>l.replace(/^\s*[-*]\s*(\[[ xX]\]\s*)?/,'').trim());
+  } else if(tipo==='exam'){ b.refs = (b.raw.match(/\b[A-Z]{1,3}\d*-[A-Z0-9]+-?[A-Z]*\d+\b/g)||[]).filter(x=>x!==b.id);
+  } else if(tipo==='passage'){ b.text = body.join('\n').trim(); }
+  else b.text = body.join('\n').trim();
+  return b;
+}
+
+/* Divide un archivo en paquetes: documento, portada o unidades sueltas */
+function dividirPaquetes(texto){
+  const L = texto.replace(/\r/g,'').split('\n'); let dentro=false; const heads=[];
+  L.forEach((l,i)=>{
+    if(dentro){ if(/^\s*:::\s*$/.test(l)) dentro=false; return; }
+    if(/^\s*:::\s*[A-Za-z]/.test(l)){ dentro=true; return; }
+    const m=/^#\s+(?!#)(.+)$/.exec(l); if(!m) return; const t=m[1].trim();
+    const k = /^DOCUMENTO\s+[ABC][12]\b/i.test(t)?'doc' : /^PORTADA/i.test(t)?'portada' : /^Unidad\s+\d+/i.test(t)?'unit' : null;
+    if(k) heads.push({i,k,t});
+  });
+  if(!heads.length) return {error:'No se reconoció ningún encabezado (# DOCUMENTO …, # PORTADA …, # Unidad N).', packs:[]};
+  const segs=[]; let cur=null;
+  heads.forEach(h=>{ if(h.k==='unit' && cur && cur.k==='doc') return; cur={...h}; segs.push(cur); });
+  const packs = segs.map((s,j)=>{
+    const fin = j+1<segs.length ? segs[j+1].i : L.length, md = L.slice(s.i,fin).join('\n');
+    if(s.k==='doc'){ const id=/([ABC][12])/i.exec(s.t)[1].toUpperCase(), pt=+(/parte\s*(\d+)/i.exec(s.t)||[])[1]||1; return {key:'DOC:'+id+(pt>1?'#'+pt:''), kind:'doc', id, parte:pt, md}; }
+    if(s.k==='portada') return {key:'PORTADA', kind:'portada', id:'PORTADA', md};
+    const n=+/Unidad\s+(\d+)/i.exec(s.t)[1]; return {key:'UNIT:'+pad2(n), kind:'unit', id:n, md};
+  });
+  return {packs};
+}
+
+/* Analiza un paquete → estructura de documento/unidades/secciones/bloques */
+function parsePaquete(pack){
+  const L = pack.md.replace(/\r/g,'').split('\n');
+  const r = {key:pack.key, kind:pack.kind, id:pack.id, meta:{}, units:[], docSections:[], blocks:[], warn:[]};
+  let unit=null, sec=null, buf=[];
+  const flush = () => { const t=buf.join('\n').trim(); if(t && sec) sec.items.push({t:'md', text:t}); buf=[]; };
+  const nueva = (title, doc) => { flush(); sec={title, doc, items:[]}; (doc||!unit ? r.docSections : unit.sections).push(sec); };
+  for(let i=0; i<L.length; i++){
+    const l = L[i]; let m;
+    if((m=/^\s*:::\s*([A-Za-z][\w-]*)\s*(.*)$/.exec(l))){
+      const tipo = m[1].toLowerCase(), attrs = parseAttrs(m[2]), body=[]; i++;
+      while(i<L.length && !/^\s*:::\s*$/.test(L[i])) body.push(L[i++]);
+      if(i>=L.length) r.warn.push(`Bloque :::${tipo}${attrs.id?' '+attrs.id:''} sin cierre ":::" al final del archivo`);
+      if(!sec){ flush(); sec={title:'(inicio)',doc:!unit,items:[]}; (unit?unit.sections:r.docSections).push(sec); }
+      flush();
+      const b = parseBloque(tipo, attrs, body); b.unit = sec.doc ? null : unit?.n ?? null;
+      if(!BLOQUES.includes(tipo)) r.warn.push(`Bloque desconocido :::${tipo}${attrs.id?' ('+attrs.id+')':''}; se muestra de forma genérica`);
+      sec.items.push({t:'block', b}); r.blocks.push(b); continue;
+    }
+    if(/^#\s+(?!#)/.test(l)){
+      flush();
+      if((m=/^#\s+Unidad\s+(\d+)\.?\s*(.*)$/i.exec(l))){ unit={n:+m[1], title:m[2].trim(), meta:{}, sections:[]}; r.units.push(unit); sec=null; }
+      else if(/^#\s+(DOCUMENTO|PORTADA)/i.test(l)){ r.title=l.replace(/^#\s+/,'').trim(); sec=null; }
+      else { unit=null; nueva(l.replace(/^#\s+/,'').trim(), true); }
+      continue;
+    }
+    if((m=/^##\s+(.*)$/.exec(l))){ const t=m[1].trim(); nueva(t, !unit || /prueba de logro|glosario/i.test(t)); continue; }
+    if(!sec && (m=/^meta:\s*(.*)$/i.exec(l))){ (unit ? unit.meta : r.meta) && Object.assign(unit ? unit.meta : r.meta, parseMetaLine(m[1])); continue; }
+    if(/^\s*FIN DEL CURSO\s*$/i.test(l)) continue;
+    if(!sec && !l.trim()) continue;
+    if(!sec){ sec={title:'(inicio)',doc:!unit,items:[]}; (unit?unit.sections:r.docSections).push(sec); }
+    buf.push(l);
+  }
+  flush();
+  return r;
+}
+/*PARSER-END*/
+
+/* ============ 4. MODELO DEL CURSO + VALIDACIÓN ============ */
+/* Un documento puede llegar en partes ("# DOCUMENTO A1 · parte 2/3"): se unen en orden antes de analizarlo */
+function unirPartes(packsMap){
+  const out = new Map(), partes = [], av = [];
+  packsMap.forEach(p=>{ if(p.kind==='doc' && (p.parte||1)>1) partes.push(p); else out.set(p.key, {...p}); });
+  partes.sort((a,b)=>a.parte-b.parte).forEach(p=>{
+    const base = out.get('DOC:'+p.id), cuerpo = p.md.split('\n').slice(1).join('\n');
+    if(base) base.md += '\n'+cuerpo; else { out.set('DOC:'+p.id, {...p, key:'DOC:'+p.id}); av.push({where:'Documento '+p.id, msg:`Falta la parte 1 (la que trae "# DOCUMENTO ${p.id}" y la guía de uso)`}); }
+  });
+  return {out, av};
+}
+function construirCurso(packsMap){
+  const c = {parsed:[], units:new Map(), docs:new Map(), portada:null, byId:new Map(), dup:[], warn:[]};
+  const orden = {doc:0, portada:1, unit:2};
+  const um = unirPartes(packsMap); um.av.forEach(x=>c.warn.push(x));
+  [...um.out.values()].sort((a,b)=>orden[a.kind]-orden[b.kind] || String(a.key).localeCompare(b.key)).forEach(p=>{
+    const r = parsePaquete(p); c.parsed.push(r);
+    if(p.kind==='portada') c.portada = r;
+    if(p.kind==='doc') c.docs.set(p.id, r);
+    r.units.forEach(u=>{
+      if(c.units.has(u.n)) c.warn.push({where:'Unidad '+u.n, msg:`Aparece dos veces (${c.units.get(u.n).from} y ${p.key}); se usa ${p.key}`});
+      c.units.set(u.n, {...u, from:p.key, doc:p.kind==='doc'?p.id:null});
+    });
+    r.blocks.forEach(b=>{
+      if(!b.id) return;
+      if(c.byId.has(b.id)) c.dup.push(b.id); else c.byId.set(b.id, b);
+    });
+  });
+  return c;
+}
+const normTit = s => norm(s).replace(/^\d+\s*/,'');
+function validar(c){
+  const w = [], add = (where,msg,lvl='aviso') => w.push({where,msg,lvl});
+  c.warn.forEach(x=>add(x.where,x.msg));
+  c.parsed.forEach(r=>r.warn.forEach(m=>add(r.key,m)));
+  [...new Set(c.dup)].forEach(id=>add(id,'ID duplicado dentro de lo cargado'));
+  const tiene = (id,tipo) => c.byId.get(id)?.type===tipo;
+  const refs = {audio:'audio', passage:'passage', image:'image', chart:'chart'};
+  c.parsed.forEach(r=>{
+    r.units.forEach(u=>{
+      const min=+u.meta.minutes; if(u.meta.minutes && (min<30||min>40)) add('Unidad '+u.n,`minutes=${u.meta.minutes} fuera de 30–40`);
+      if(u.sections.length!==12) add('Unidad '+u.n,`Trae ${u.sections.length} secciones ## (se esperan 12)`);
+      else u.sections.forEach((s,i)=>{ if(!normTit(s.title).startsWith(normTit(PASOS[i]).slice(0,10))) add('Unidad '+u.n,`Sección ${i+1} "${s.title}" no coincide con "${PASOS[i]}"`); });
+      const rep = u.sections.find(s=>/^repaso/i.test(normTit(s.title)));
+      if(rep){ const t=rep.items.map(i=>i.text||'').join(' '); (t.match(/Unidad\s+(\d+)|\bU(\d{1,2})\b/g)||[]).forEach(x=>{ const n=+x.replace(/\D/g,''); if(n>u.n) add('Unidad '+u.n,`"Repaso rápido" apunta hacia delante a la Unidad ${n}`); else if(!c.units.has(n)) add('Unidad '+u.n,`"Repaso rápido" menciona la Unidad ${n}, aún no cargada`,'info'); }); }
+    });
+    r.blocks.forEach(b=>{
+      const id = b.id || '(sin id)';
+      if(b.type==='q'){
+        if(!Q_TIPOS.includes(b.qtype)) add(id,`Tipo de pregunta desconocido "${b.qtype}"`);
+        const f=b.f;
+        if(Q_ABIERTAS.includes(b.qtype)){ ['rubric','key_ideas'].forEach(k=>{ if(!f[k]) add(id,`Pregunta abierta sin ${k}`); }); if(!b.minWords) add(id,'Pregunta abierta sin min_words'); }
+        else if(b.qtype==='repeat'){ if(!f.target) add(id,'repeat sin target'); }
+        else { if(!f.answer && !(b.qtype==='match' && f.pairs)) add(id,b.qtype==='match'?'match sin pairs':'Pregunta sin answer'); if(!f.explain) add(id,'Pregunta sin explain'); }
+        if(['mcq','mcq-multi'].includes(b.qtype) && b.options.length<2) add(id,'Opciones a–d no reconocidas');
+        Object.entries(refs).forEach(([k,tipo])=>{ const v=b.attrs[k]; if(v && !tiene(v,tipo)) add(id,`${k}=${v} no existe en lo cargado`); });
+      }
+      if(b.type==='exam') b.refs.forEach(x=>{ if(!c.byId.has(x)) add(id,`El simulacro cita ${x}, que no está cargado`,'info'); });
+      if(b.type==='audio' && !b.turns.length) add(id,'Audio sin turnos (A: / B:)');
+      if(b.type==='chart' && !b.series.length) add(id,'Gráfico sin series');
+    });
+  });
+  return w;
+}
+function contar(parsed){
+  const k = {q:0, porTipo:{}, audio:0, passage:0, chart:0, image:0, table:0, vocab:0, exam:0, otros:0};
+  parsed.forEach(r=>r.blocks.forEach(b=>{
+    if(b.type==='q'){ k.q++; k.porTipo[b.qtype]=(k.porTipo[b.qtype]||0)+1; }
+    else if(b.type==='vocab') k.vocab += b.rows.length;
+    else if(k[b.type]!==undefined) k[b.type]++; else k.otros++;
+  }));
+  return k;
+}
+
+/* ============ 5. BASE DE DATOS (IndexedDB) ============ */
+let _db = null, _memPacks = new Map();
+function abrirDB(){
+  return new Promise(res=>{
+    if(!window.indexedDB) return res(null);
+    const rq = indexedDB.open(DB_NAME,1);
+    rq.onupgradeneeded = () => { const d=rq.result; d.createObjectStore('packs',{keyPath:'key'}); d.createObjectStore('media',{keyPath:'id'}); };
+    rq.onsuccess = () => res(rq.result); rq.onerror = () => res(null);
+  });
+}
+const idb = (store,mode,fn) => new Promise((res,rej)=>{ if(!_db) return res(null); const tx=_db.transaction(store,mode), rq=fn(tx.objectStore(store)); tx.oncomplete=()=>res(rq?.result); tx.onerror=()=>rej(tx.error); });
+async function guardarPack(p){ if(_db) await idb('packs','readwrite',s=>s.put(p)); else _memPacks.set(p.key,p); }
+async function borrarPack(k){ if(_db) await idb('packs','readwrite',s=>s.delete(k)); else _memPacks.delete(k); }
+
+/* ============ 6. ESTADO (localStorage: solo ajustes y progreso) ============ */
+let S = (()=>{ try{ return Object.assign(estadoInicial(), JSON.parse(localStorage.getItem(LS_KEY)||'{}')); }catch{ return estadoInicial(); } })();
+normalizar();
+const guardarEstado = () => { try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch{ toast('No se pudo guardar el progreso en este navegador'); } };
+function aplicarAjustes(){
+  const r=document.documentElement; r.style.fontSize = (S.ajustes.fuente||100)+'%';
+  if(S.ajustes.tema==='auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', S.ajustes.tema);
+}
+
+let packs = new Map(), modelos = {}, curso = construirCurso(new Map()), avisos = [], indiceBusqueda = [];
+/* ============ 7. PANTALLAS ============ */
+function anillo(p,size=56){
+  const r=size/2-5, c=2*Math.PI*r;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${p}% completado"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--ok)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${c*p/100} ${c}" transform="rotate(-90 ${size/2} ${size/2})"/><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-size="${size/4}" fill="currentColor">${p}%</text></svg>`;
+}
+function vBuscar(){ return `<h1>Buscar</h1><input type="search" id="q" placeholder="Texto, vocabulario o unidad" aria-label="Buscar"><div id="res"></div>`; }
+function buscar(q){
+  q = norm(q); if(q.length<2) return '<p class="mut">Escribe al menos 2 letras.</p>';
+  const hits = indiceBusqueda.filter(x=>norm(x.t).includes(q)).slice(0,40);
+  return hits.length ? hits.map(h=>`<div class="card"><small>${h.u?`<a href="#/unidad/${h.u}">Unidad ${h.u}</a>`:'General'}</small><p>${inline(h.t.slice(0,220))}</p></div>`).join('') : '<p class="mut">Sin resultados.</p>';
+}
+
+const listaAvisos = (w,max=40) => w.length ? `<p><b>${w.length} avisos</b> <small>(no bloquean la importación)</small></p>`+w.slice(0,max).map(x=>`<div class="warn"><b>${esc(x.where)}</b>: ${esc(x.msg)}</div>`).join('')+(w.length>max?`<p class="mut">…y ${w.length-max} más (ver Verificar curso).</p>`:'') : '<p class="tag ok">Sin avisos</p>';
+function vVerificar(){
+  const k = contar(curso.parsed), tipos = Object.entries(k.porTipo).map(([t,n])=>`${t}: ${n}`).join(' · ');
+  return `<a href="#/perfil">‹ Perfil</a><h1>Verificar curso</h1><p class="mut">${esc(nombreCurso(S.activo))}</p>
+  <div class="card"><p>${curso.docs.size} documentos · ${curso.units.size} unidades · ${k.q} preguntas · ${k.vocab} palabras</p><p class="mut">${k.audio} audios · ${k.passage} textos · ${k.chart} gráficos · ${k.image} imágenes · ${k.table} tablas · ${k.exam} simulacros/pruebas</p><p class="mut">${esc(tipos||'Sin preguntas')}</p></div>
+  <div class="card">${listaAvisos(avisos)}</div><p class="mut">Esta pantalla solo informa: nunca corrige ni modifica el curso.</p>`;
+}
+/* ============ 7b. MOTOR DE PREGUNTAS, AUDIO, IA Y PANTALLAS ============ */
+const AUDIO_FILES = {}, IMAGE_FILES = {};          // Ganchos externos: {"U07-AU01": "url o data URI"}
+const Q = {}, RS = {}, REV = {}, CONJ = {}, QM = {}, PL = {}, ABIERTO = {};   // respuestas en curso, resultados, revelado, conjuntos, modo, reproducciones, apertura
+const txt = s => inline(s).replace(/\n/g,'<br>');
+const nz = s => String(s??'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[“”]/g,'"').replace(/^["']+|["']+$/g,'').replace(/[.!?,;:]+$/g,'').replace(/\s+/g,' ').trim();
+const hoy = () => new Date().toISOString().slice(0,10);
+const palabras = s => (String(s||'').trim().match(/\S+/g)||[]).length;
+const esAbierta = b => Q_ABIERTAS.includes(b.qtype);
+const visible = b => { const e=(b.attrs.exam||'all').toLowerCase(); return e==='all'||e==='both'||e===metaCurso()||(e==='ielts'&&metaCurso()!=='toefl'); };
+const qsDe = items => items.filter(i=>i.t==='block' && i.b.type==='q' && visible(i.b)).map(i=>i.b);
+const minPal = b => b.minWords || (b.qtype==='write' ? +(/at least (\d+) words/i.exec(b.f.stem||'')||[])[1]||50 : b.qtype==='speak' ? 8 : 25);
+function celebrar(msg){
+  toast(msg); if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const d=document.createElement('div'); d.className='conf'; d.setAttribute('aria-hidden','true');
+  d.innerHTML=Array.from({length:22},(_,i)=>`<span style="left:${(i*4.7+3)%100}%;animation-delay:${(i%7)*0.12}s">${['🎉','⭐','✨','🎓'][i%4]}</span>`).join('');
+  document.body.appendChild(d); setTimeout(()=>d.remove(),2400);
+}
+function sumarXP(n){ G().xp += n; const d=hoy(); if(!G().dias.includes(d)) G().dias.push(d); }
+function mezclar(arr, seed){ let h=0; for(const c of seed) h=(h*31+c.charCodeAt(0))>>>0; const a=[...arr]; for(let i=a.length-1;i>0;i--){ h=(h*1103515245+12345)>>>0; const j=h%(i+1); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+/* ---- Autocorrección ---- */
+function limiteOk(lim, r){
+  if(!lim) return true; const L=lim.toUpperCase(), W={ONE:1,TWO:2,THREE:3,FOUR:4}, m=/(ONE|TWO|THREE|FOUR)\s+WORD/.exec(L);
+  if(m) return palabras(r) <= W[m[1]] + (/NUMBER/.test(L)?1:0);
+  return /NUMBER/.test(L) ? palabras(r)<=1 : true;
+}
+function evalQ(b, r){
+  const f=b.f, ans=nz(f.answer);
+  switch(b.qtype){
+    case 'mcq': return {ok: !!r && nz(r)===ans};
+    case 'mcq-multi': { const c=ans.split(/[\s,]+/).filter(Boolean), u=r||[], falta=c.filter(x=>!u.includes(x)).length, sobra=u.filter(x=>!c.includes(x)).length;
+      return {ok:u.length>0&&!falta&&!sobra, msg:u.length&&(falta||sobra)?`Te faltan ${falta} y sobran ${sobra}.`:''}; }
+    case 'tfng': case 'ynng': return {ok: !!r && (nz(r)===ans || (ans==='ng' && nz(r)==='not given'))};
+    case 'fill': case 'short': { const x=nz(r); if(!x) return {ok:false};
+      if([f.answer,...b.accept].some(a=>nz(a)===x)) return {ok:true};
+      return {ok:false, msg: limiteOk(f.limit,r) ? '' : `Pasaste el límite (${f.limit}).`}; }
+    case 'fillbank': return {ok: !!r && nz(r)===ans};
+    case 'match': { const pr=lista(f.pairs).map(p=>p.split('-').map(s=>s.trim())); return {ok: pr.length>0 && pr.every(([k,v])=>nz((r||{})[k])===nz(v))}; }
+    case 'order': { const j=nz((r||[]).join(' ')); return {ok: j===ans || b.accept.some(a=>nz(a)===j)}; }
+    case 'label': { const parts=lista(f.answer).map(p=>p.replace(/^\d+\s*-\s*/,'')); return {ok: parts.every((p,i)=>nz((r||[])[i])===nz(p))}; }
+    case 'repeat': { const tg=nz(f.target).split(' '), got=new Set(nz(r).split(' ')), s=tg.filter(w=>got.has(w)).length/tg.length;
+      return {ok: s>=S.ajustes.umbral, msg:`Coincidencia con el modelo: ${Math.round(s*100)}%`}; }
+    default: return {ok:null};
+  }
+}
+const respTexto = b => b.f.answer || b.f.pairs || b.f.target || '';
+
+/* ---- Evaluación con IA: claude.complete → endpoint propio → autoevaluación ---- */
+async function aiJudge(b, texto){
+  const u = b.unit && curso.units.get(b.unit), nivel = u ? (nivelesDe(curso).find(l=>l.units.includes(u.n))?.nombre || u.doc || '') : '', ex = (b.attrs.exam||'').toLowerCase();
+  const crit = /academic|general|ielts/.test(ex) ? (b.qtype==='speak' ? 'Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy (NO evalúes Pronunciation: solo recibes texto)' : 'Task Achievement/Response, Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy')
+    : /toefl/.test(ex) ? 'criterios públicos de ETS para la tarea (si dudas, indica VERIFICAR)' : 'la rúbrica y las ideas clave de la tarea, sin inventar criterios externos'+(b.qtype==='speak'?' (no evalúes pronunciación: solo recibes texto)':'');
+  const prompt = `Eres un evaluador pedagógico exigente pero amable. Curso: ${nombreCurso(S.activo)}. Nivel: ${nivel}. Tarea: ${b.f.stem}\nRúbrica: ${b.f.rubric}\nIdeas clave: ${b.f.key_ideas}\nMínimo de palabras: ${minPal(b)}\nCriterios: ${crit}.\nTexto del alumno:\n"""${texto}"""\nEvalúa al alumno, sin prometer puntajes oficiales. Responde SOLO JSON: {"aprobado":bool,"comentario":"…","puntos_fuertes":[…],"mejorar":[…],"banda_aproximada":"…"}`;
+  const ia = S.ajustes.ia; let raw = null;
+  try{
+    if(window.claude && typeof window.claude.complete==='function') raw = await window.claude.complete(prompt);
+    else if(ia.url && ia.key){
+      const an = /anthropic/i.test(ia.url);
+      const r = await fetch(ia.url,{method:'POST', headers: an ? {'content-type':'application/json','x-api-key':ia.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'} : {'content-type':'application/json','authorization':'Bearer '+ia.key},
+        body: JSON.stringify(an ? {model:ia.model, max_tokens:700, messages:[{role:'user',content:prompt}]} : {model:ia.model, messages:[{role:'user',content:prompt}]})});
+      const d = await r.json(); raw = an ? d.content?.[0]?.text : d.choices?.[0]?.message?.content;
+    }
+    const m = /\{[\s\S]*\}/.exec(String(raw||'')); return m ? JSON.parse(m[0]) : null;
+  }catch{ return null; }
+}
+
+/* ---- Audio y voz ---- */
+const hayVoces = () => 'speechSynthesis' in window && speechSynthesis.getVoices().some(v=>/^en/i.test(v.lang));
+function elegirVoz(lang, g){
+  const vs = speechSynthesis.getVoices(), pr = vs.filter(v=>v.lang.replace('_','-').toLowerCase().startsWith(lang.toLowerCase())), en = pr.length ? pr : vs.filter(v=>/^en/i.test(v.lang));
+  const re = g==='woman' ? /\bfemale\b|zira|samantha|susan|hazel|karen|moira|aria|jenny|libby|sonia|serena|kate/i : /\bmale\b|david|daniel|mark|alex|fred|guy|ryan|james|oliver|george/i;
+  return en.find(v=>re.test(v.name)) || en[0] || null;
+}
+function hablar(segs, fin, rate){
+  speechSynthesis.cancel(); let i=0;
+  const sig = () => { if(i>=segs.length){ fin&&fin(); return; } const s=segs[i++]; if(s.pausa){ setTimeout(sig,s.pausa); return; }
+    const u=new SpeechSynthesisUtterance(s.text); u.lang=s.lang; if(s.voz) u.voice=s.voz; u.rate=rate; u.pitch=s.pitch||1; u.onend=sig; u.onerror=sig; speechSynthesis.speak(u); };
+  sig();
+}
+function segmentos(a){
+  const sp = {}; String(a.speakers||'').split('|').forEach(x=>{ const m=/([A-Za-z])\s*=\s*(\w+)/.exec(x); if(m) sp[m[1].toUpperCase()]=m[2].toLowerCase(); });
+  const acc = (a.attrs.accent||'mixed').toLowerCase(), LS = {british:'en-GB',american:'en-US',australian:'en-AU'}, mix=['en-GB','en-US','en-AU'], segs=[];
+  const turnos = a.turns.length ? a.turns : [{who:'A', text:a.raw}];
+  turnos.forEach(t=>{
+    const g=sp[t.who]||'woman', idx=Object.keys(sp).indexOf(t.who), lang = LS[acc] || mix[Math.max(idx,0)%3], v = elegirVoz(lang,g);
+    t.text.split(/\[pause\]/i).forEach((part,k)=>{ if(k) segs.push({pausa:800}); if(part.trim()) segs.push({text:part.trim(), lang:v?v.lang:lang, voz:v, pitch: v?1:(g==='woman'?1.2:0.8)}); });
+    segs.push({pausa:350});
+  });
+  return segs;
+}
+function decir(texto, rate=0.9){ if(!('speechSynthesis' in window) || !hayVoces()){ toast('Este dispositivo no tiene voces en inglés. Instala una en los ajustes del sistema.'); return; } hablar([{text:texto, lang:S.ajustes.voz, voz:elegirVoz(S.ajustes.voz,'woman')}], null, rate); }
+function audioHTML(a, key, o={}){
+  if(!a) return '<div class="warn">Audio no cargado.</div>';
+  const sinVoz = !AUDIO_FILES[a.id] && (NOVOZ || !('speechSynthesis' in window)), max = o.modelo ? Infinity : (+a.attrs.plays||1), n = PL[key]||0, ver = o.modelo || o.rev || sinVoz;
+  const guion = a.turns.map(t=>`<p><b>${esc(t.who)}:</b> ${esc(t.text)}</p>`).join('');
+  return `<div class="au" data-key="${esc(key)}"><div class="row"><b class="grow">🔊 ${esc(a.attrs.title||a.id)}</b></div>
+  <div class="row"><button data-act="au" data-a="${esc(a.id)}" data-key="${esc(key)}" data-modelo="${o.modelo?1:0}" ${n>=max?'disabled':''}>▶ Escuchar</button>
+  ${sinVoz?'<small>Sin voces en inglés en este dispositivo: lee el guion.</small>':''}${o.modelo?'<select data-vel aria-label="Velocidad"><option value="0.7">Lenta</option><option value="0.9" selected>Normal</option></select>':`<small>Reproducciones: ${n} de ${max}</small>`}
+  ${n>=max && o.practica?`<button data-act="auri" data-key="${esc(key)}">Reiniciar</button>`:''}</div>
+  ${ver?`<details><summary>${o.modelo?'Ver guion':'Transcripción'}</summary>${guion}</details>`:''}</div>`;
+}
+let REC = null;
+function dictar(id, btn){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ toast('Este navegador no tiene dictado por voz. Escribe tu respuesta.'); return; }
+  if(REC){ REC.stop(); return; }
+  const r = new SR(); r.lang=S.ajustes.voz; r.continuous=true; r.interimResults=false; REC=r; btn.textContent='⏹ Detener';
+  r.onresult = e => { let t=''; for(let i=e.resultIndex;i<e.results.length;i++) if(e.results[i].isFinal) t+=e.results[i][0].transcript+' ';
+    Q[id]=((Q[id]||'')+' '+t).trim(); const ta=document.getElementById('ta-'+id); if(ta){ ta.value=Q[id]; ta.dispatchEvent(new Event('input',{bubbles:true})); } };
+  r.onend = r.onerror = () => { REC=null; btn.textContent='🎤 Dictar'; };
+  r.start();
+}
+
+/* ---- Gráficos SVG, imágenes, procesos ---- */
+const COL = ['#0b5fd6','#1b7f45','#b45a00','#7a4ed1'];
+function chartHTML(c){
+  if(!c) return '<div class="warn">Gráfico no cargado.</div>';
+  const W=320, H=190, p=30, n=c.labels.length, max=Math.max(1,...c.series.flatMap(s=>s.vals)), t=c.attrs.type||'bar';
+  const resumen = `${c.attrs.caption||''}. `+c.series.map(s=>`${s.name}: ${s.vals.join(', ')}`).join('; ');
+  let svg='';
+  if(t==='table') return `<figure><div class="tw"><table><thead><tr><th></th>${c.labels.map(l=>`<th>${esc(l)}</th>`).join('')}</tr></thead><tbody>${c.series.map(s=>`<tr><th>${esc(s.name)}</th>${s.vals.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${figPie(c)}</figure>`;
+  if(t==='pie'){ const vs=c.series[0]?.vals||[], tot=vs.reduce((a,b)=>a+b,0)||1; let ang=-Math.PI/2;
+    svg = vs.map((v,i)=>{ const a2=ang+2*Math.PI*v/tot, x1=100+80*Math.cos(ang), y1=95+80*Math.sin(ang), x2=100+80*Math.cos(a2), y2=95+80*Math.sin(a2), d=`M100 95L${x1} ${y1}A80 80 0 ${v/tot>.5?1:0} 1 ${x2} ${y2}Z`; ang=a2; return `<path d="${d}" fill="${COL[i%4]}" stroke="var(--card)"/>`; }).join('')
+      + `<g font-size="11" fill="currentColor">${c.labels.map((l,i)=>`<rect x="205" y="${30+i*18}" width="10" height="10" fill="${COL[i%4]}"/><text x="220" y="${39+i*18}">${esc(l)} (${vs[i]})</text>`).join('')}</g>`;
+  } else {
+    const bw=(W-2*p)/n, ns=c.series.length;
+    svg = `<line x1="${p}" y1="${H-p}" x2="${W-p}" y2="${H-p}" stroke="currentColor" opacity=".4"/><text x="4" y="14" font-size="10" fill="currentColor">${esc(c.attrs.unit||'')} (máx. ${max})</text>`
+     + c.labels.map((l,i)=>`<text x="${p+bw*i+bw/2}" y="${H-p+14}" font-size="10" text-anchor="middle" fill="currentColor">${esc(l)}</text>`).join('');
+    if(t==='line') svg += c.series.map((s,k)=>`<polyline fill="none" stroke="${COL[k%4]}" stroke-width="2" points="${s.vals.map((v,i)=>`${p+bw*i+bw/2},${H-p-(H-2*p)*v/max}`).join(' ')}"/>`+s.vals.map((v,i)=>`<circle cx="${p+bw*i+bw/2}" cy="${H-p-(H-2*p)*v/max}" r="3" fill="${COL[k%4]}"/>`).join('')).join('');
+    else svg += c.series.map((s,k)=>s.vals.map((v,i)=>{ const w=bw*.8/ns, h=(H-2*p)*v/max; return `<rect x="${p+bw*i+bw*.1+w*k}" y="${H-p-h}" width="${w}" height="${h}" fill="${COL[k%4]}"/>`; }).join('')).join('');
+  }
+  const leyenda = t==='pie' ? '' : `<p>${c.series.map((s,k)=>`<span style="color:${COL[k%4]}">■</span> ${esc(s.name)}`).join(' &nbsp; ')}</p>`;
+  return `<figure><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(resumen)}" style="width:100%;max-width:420px">${svg}</svg>${leyenda}${figPie(c)}</figure>`;
+}
+const figPie = c => `<figcaption><small>${esc(c.attrs.caption||'')} ${c.attrs.fictional==='true'?'· <b>Datos ficticios</b>':''}</small></figcaption>`;
+function imagenHTML(im, id){
+  if(!im) return '<div class="warn">Imagen no cargada.</div>';
+  const src = IMAGE_FILES[im.id];
+  return `<figure>${src?`<img src="${esc(src)}" alt="${esc(im.attrs.alt||'')}" style="max-width:100%;border-radius:12px">`:`<div class="card" role="img" aria-label="${esc(im.attrs.alt||'')}" style="text-align:center;color:var(--mut)">Ilustración: ${esc(im.attrs.alt||'')}</div>`}<figcaption><small>${esc(im.attrs.caption||'')}</small></figcaption></figure>`;
+}
+
+/* ---- Bloques ---- */
+const hash = s => { let h=0; for(const c of s) h=(h*31+c.charCodeAt(0))>>>0; return h.toString(36); };
+function vBloque(b, ctx={noq:true}){
+  switch(b.type){
+    case 'table': return `<div class="blk"><b>${esc(b.attrs.caption||'')}</b>${renderTabla(b.rows)}</div>`;
+    case 'box': return `<div class="blk ${esc(b.attrs.tipo||'')}"><small><b>${{tip:'Consejo',warning:'Cuidado',exam:'Examen',culture:'Cultura'}[b.attrs.tipo]||''}</b></small>${md(b.text)}</div>`;
+    case 'vocab': return b.rows.map(v=>`<div class="card"><div class="row"><b class="grow">${esc(v.term)} <small>${esc(v.ipa)}</small></b>${v.ipa?`<button data-act="say" data-t="${esc(v.term)}" aria-label="Pronunciar ${esc(v.term)}">🔊</button>`:''}</div>${esc(v.es)}<br><small>${inline(v.ex)}${v.col?' · '+esc(v.col):''}</small></div>`).join('');
+    case 'pron': return `<div class="card"><b>Sonido ${esc(b.attrs.sonido||'')}</b><p>${inline(b.tip)}</p>${b.pares.map(pr=>`<button class="chip" data-act="say" data-t="${esc(pr.join(', '))}">${esc(pr.join(' · '))}</button> `).join('')}</div>`;
+    case 'passage': return visible(b) ? `<div class="card"><h3 style="margin-top:0">${esc(b.attrs.title||'')}</h3>${b.text.split(/\n+/).map(p=>`<p>${inline(p)}</p>`).join('')}</div>` : '';
+    case 'audio': return audioHTML(b, 'm:'+b.id, {modelo:true});
+    case 'image': return imagenHTML(b);
+    case 'chart': return chartHTML(b);
+    case 'process': return `<ol class="proc">${b.steps.map(s=>`<li>${inline(s)}</li>`).join('')}</ol>`;
+    case 'checklist': return `<div class="card">${b.items.map((s,i)=>{ const k='cl:'+hash(b.raw)+':'+i; return `<label class="opt"><input type="checkbox" data-act="cl" data-k="${k}" ${P().checks[k]?'checked':''}> <span>${inline(s)}</span></label>`; }).join('')}</div>`;
+    case 'model-answer': return `<div class="card"><small>Respuesta modelo · ${esc(b.attrs.type||'')} ${esc(b.attrs.band?'(aprox. '+b.attrs.band+')':'')}</small>${md(b.text)}</div>`;
+    case 'exam': return `<a class="btn pri" href="#/prueba/${esc(b.id)}">${esc(b.attrs.name||'Prueba')}: ${esc(b.attrs.minutes||'')} min</a>`;
+    case 'q': return ctx.noq ? '' : (visible(b) ? qHTML(b, ctx.modo||'inline') : '');
+    default: return `<div class="blk"><span class="tag">${esc(b.type)}${b.id?' · '+esc(b.id):''}</span></div>`;
+  }
+}
+const vItems = (items, ctx) => items.map(i=>i.t==='md'?md(i.text):vBloque(i.b, ctx)).join('');
+
+/* ---- Pregunta ---- */
+function initResp(b){
+  switch(b.qtype){
+    case 'mcq-multi': return [];
+    case 'match': return {};
+    case 'label': return ['','','','',''];
+    case 'order': { const it=lista((b.f.items||'').replace(/\//g,',')); const m=mezclar(it,b.id); return nz(m.join(' '))===nz(b.f.answer) ? [...m.slice(1),m[0]] : m; }
+    default: return '';
+  }
+}
+function recursosQ(b){
+  const a=b.attrs, rev=!!RS[b.id]&&(QM[b.id]==='inline'||REV[b.id]); let h='';
+  const falta = (id,k) => `<div class="warn">${k} ${esc(id)} no está cargado.</div>`;
+  if(a.audio){ const x=curso.byId.get(a.audio); h += x ? audioHTML(x,'q:'+b.id,{rev,practica:a.mode==='practice'}) : falta(a.audio,'Audio'); }
+  if(a.passage){ const x=curso.byId.get(a.passage); h += x ? `<details open><summary>Texto: ${esc(x.attrs.title||x.id)}</summary>${x.text.split(/\n+/).map(p=>`<p>${inline(p)}</p>`).join('')}</details>` : falta(a.passage,'Texto'); }
+  if(a.chart) h += chartHTML(curso.byId.get(a.chart)) ;
+  if(a.image) h += imagenHTML(curso.byId.get(a.image));
+  return h;
+}
+function cuerpoQ(b, r){
+  const id=b.id, f=b.f, t=b.qtype;
+  const ta = (min) => `<textarea id="ta-${id}" data-r="v" data-q="${id}" rows="${t==='write'?9:5}" style="width:100%;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px;font:inherit" aria-label="Tu respuesta">${esc(r)}</textarea><small id="cnt-${id}">${palabras(r)} palabras</small>${min?` <small>· mínimo ${min}</small>`:''}`;
+  const mic = (t==='speak'||t==='repeat') ? `<button data-act="mic" data-q="${id}">🎤 Dictar</button>` : '';
+  switch(t){
+    case 'mcq': return b.options.map(o=>`<label class="opt"><input type="radio" name="r-${id}" data-r="v" data-q="${id}" value="${o.k}" ${r===o.k?'checked':''}> <span>${o.k}) ${txt(o.t)}</span></label>`).join('');
+    case 'mcq-multi': return b.options.map(o=>`<label class="opt"><input type="checkbox" data-r="m" data-q="${id}" value="${o.k}" ${r.includes(o.k)?'checked':''}> <span>${o.k}) ${txt(o.t)}</span></label>`).join('');
+    case 'tfng': case 'ynng': return `<div class="row" role="group">${{tfng:['TRUE','FALSE','NOT GIVEN'],ynng:['YES','NO','NOT GIVEN']}[t].map(v=>`<button class="chip ${nz(r)===nz(v)?'on':''}" data-act="tf" data-q="${id}" data-v="${v}" aria-pressed="${nz(r)===nz(v)}">${v}</button>`).join('')}</div>`;
+    case 'fill': case 'short': return `<input type="text" data-r="v" data-q="${id}" value="${esc(r)}" autocomplete="off" autocapitalize="off" aria-label="Respuesta">${f.limit?`<small>Límite: ${esc(f.limit)}</small>`:''}`;
+    case 'fillbank': return `<select data-r="v" data-q="${id}" aria-label="Elige"><option value="">—</option>${lista(f.bank).map(x=>`<option ${r===x?'selected':''}>${esc(x)}</option>`).join('')}</select>`;
+    case 'match': { const ks=lista(f.pairs).map(p=>p.split('-')[0].trim()), L='ABCDEFGH'.slice(0,Math.max(ks.length,3)).split('');
+      return ks.map(k=>`<div class="row"><b>${esc(k)}</b><select data-r="k" data-q="${id}" data-k="${esc(k)}" aria-label="Pareja de ${esc(k)}"><option value="">—</option>${L.map(x=>`<option ${r[k]===x?'selected':''}>${x}</option>`).join('')}</select></div>`).join(''); }
+    case 'order': return `<ol>${r.map((x,i)=>`<li class="row"><span class="grow">${esc(x)}</span><button data-act="mov" data-q="${id}" data-i="${i}" data-d="-1" aria-label="Subir">↑</button><button data-act="mov" data-q="${id}" data-i="${i}" data-d="1" aria-label="Bajar">↓</button></li>`).join('')}</ol>`;
+    case 'label': return r.map((x,i)=>`<div class="row"><b>${i+1}</b><input type="text" data-r="i" data-q="${id}" data-i="${i}" value="${esc(x)}" aria-label="Marcador ${i+1}"></div>`).join('');
+    case 'repeat': return `<div class="row"><button data-act="sayq" data-q="${id}">🔊 Escuchar modelo</button>${mic}</div><p><small>Repite en voz alta; puedes corregir la transcripción.</small></p>${ta(0)}`;
+    default: return `${(t==='speak'&&f.turns)?`<p><small>${txt(f.turns)}</small></p>`:''}<div class="row">${mic}</div>${ta(minPal(b))}`;
+  }
+}
+function feedbackQ(b, rs){
+  if(!rs) return '';
+  if(rs.cargando) return '<div class="warn">Evaluando…</div>';
+  let h = '';
+  if(rs.pend){
+    h += `<div class="blk"><b>Autoevaluación guiada</b> <small>(no hay IA disponible)</small>${b.f.sample?`<details><summary>Ver respuesta modelo</summary>${txt(b.f.sample)}</details>`:''}<p>${txt(b.f.rubric||'')}</p>
+    ${lista(b.f.key_ideas).map(k=>`<label class="opt"><input type="checkbox"> <span>${inline(k)}</span></label>`).join('')}
+    <div class="row"><button class="pri" data-act="auto" data-q="${b.id}" data-v="1">Cumplí los criterios</button><button data-act="auto" data-q="${b.id}" data-v="0">Aún me falta</button></div></div>`;
+  } else if(rs.ok!=null){
+    h += `<div class="${rs.ok?'tag ok':'warn'}" style="display:block;border-radius:12px;padding:8px 12px">${rs.ok?'✓ Lograda':'Por mejorar'}${rs.auto?' · autoevaluada':''}${rs.msg?' — '+esc(rs.msg):''}</div>`;
+    if(rs.c) h += `<p>${esc(rs.c)}</p>`;
+    if(rs.fuertes?.length) h += `<p><b>Bien:</b> ${rs.fuertes.map(esc).join('; ')}</p>`;
+    if(rs.mejorar?.length) h += `<p><b>Mejorar:</b> ${rs.mejorar.map(esc).join('; ')}</p>`;
+    if(rs.banda) h += `<p><small>Banda aprox.: ${esc(rs.banda)} (orientativa, no es un puntaje oficial)</small></p>`;
+    if(!esAbierta(b) && !rs.ok && b.qtype!=='repeat') h += `<p><b>Respuesta:</b> ${esc(respTexto(b))}</p>`;
+  } else if(rs.msg) h += `<div class="warn">${esc(rs.msg)}</div>`;
+  if(rs.ok!=null && b.f.explain) h += `<p><small>${txt(b.f.explain)}</small></p>`;
+  if(rs.ok!=null && (b.qtype==='speak'||b.qtype==='repeat')) h += `<details><summary>Pronunciación (autoevaluación)</summary><p><small>La plataforma solo recibe texto: no evalúa tu pronunciación. Escucha el modelo, grábate con tu dispositivo y marca:</small></p>${['Imité el ritmo y la entonación','Pronuncié claro los sonidos difíciles','Me entendería un hablante nativo'].map(x=>`<label class="opt"><input type="checkbox"> <span>${x}</span></label>`).join('')}</details>`;
+  return h;
+}
+function qHTML(b, ctx){
+  QM[b.id]=ctx; if(!(b.id in Q)) Q[b.id]=initResp(b);
+  const rs=RS[b.id], mostrar = rs && (ctx==='inline' || REV[b.id]), prev=P().respuestas[b.id];
+  const boton = ctx==='inline' && !(rs?.pend) ? `<button class="pri" data-act="chk" data-q="${b.id}">${esAbierta(b)?'Enviar':'Comprobar'}</button>` : '';
+  return `<div class="card q" id="q-${b.id}"><small>${esc(b.id)} · ${esc(b.attrs.skill||'')}${b.attrs.mode==='graded'?' · con nota':''}${prev?.ok&&!rs?' · <b style="color:var(--ok)">✓ lograda antes</b>':''}</small>${recursosQ(b)}${b.f.stem?`<p><b>${txt(b.f.stem)}</b></p>`:''}${cuerpoQ(b,Q[b.id])} <div class="row">${boton}</div>${mostrar?feedbackQ(b,rs):''}</div>`;
+}
+const refrescarQ = id => { const el=document.getElementById('q-'+id), b=curso.byId.get(id); if(el&&b) el.outerHTML = qHTML(b, QM[id]||'inline'); };
+
+/* ---- Registro, conjuntos (evaluación de unidad / pruebas) ---- */
+function registrar(b, ok, extra={}){
+  const prev = P().respuestas[b.id];
+  P().respuestas[b.id] = {ok, t:Date.now(), ...extra}; sumarXP(0);
+  if(ok){ delete P().errores[b.id]; if(!prev?.ok) sumarXP(b.attrs.mode==='graded'?10:5); } else if(ok===false) P().errores[b.id]=1;
+  guardarEstado(); actualizarConjuntos(); if(b.unit) actualizarPasos(b.unit);
+}
+async function enviarAbierta(id, forzado){
+  const b=curso.byId.get(id), t=(Q[id]||'').trim(), min=minPal(b), pal=palabras(t);
+  if(pal<min){
+    if(!forzado){ RS[id]={ok:null, msg:`Escribe al menos ${min} palabras (llevas ${pal}).`}; return refrescarQ(id); }
+    RS[id]={ok:false, msg:`Respuesta corta (${pal} de ${min} palabras).`}; registrar(b,false); return refrescarQ(id);
+  }
+  RS[id]={cargando:true}; refrescarQ(id);
+  const j = await aiJudge(b,t);
+  if(j){ RS[id]={ok:!!j.aprobado, c:j.comentario, fuertes:j.puntos_fuertes, mejorar:j.mejorar, banda:j.banda_aproximada}; registrar(b,RS[id].ok,{c:j.comentario}); }
+  else RS[id]={pend:true, ok:null};
+  refrescarQ(id); actualizarConjuntos();
+}
+async function comprobar(id){
+  const b=curso.byId.get(id); if(esAbierta(b)) return enviarAbierta(id);
+  const e=evalQ(b,Q[id]); RS[id]={ok:e.ok, msg:e.msg}; registrar(b,e.ok); refrescarQ(id);
+}
+async function terminarConjunto(key){
+  const c=CONJ[key]; c.fin=true;
+  c.qs.forEach(id=>{ const b=curso.byId.get(id); REV[id]=true; if(!esAbierta(b)){ const e=evalQ(b,Q[id]); RS[id]={ok:e.ok,msg:e.msg}; registrar(b,e.ok); } });
+  c.qs.forEach(refrescarQ);
+  for(const id of c.qs) if(esAbierta(curso.byId.get(id))){ await enviarAbierta(id,true); }
+  actualizarConjuntos();
+}
+function calcConjunto(c){
+  const qs=c.qs.map(id=>curso.byId.get(id)), cer=qs.filter(b=>!esAbierta(b)), ab=qs.filter(esAbierta);
+  const okc=cer.filter(b=>RS[b.id]?.ok).length, pct=cer.length?Math.round(100*okc/cer.length):0, okA=ab.filter(b=>RS[b.id]?.ok===true).length, pend=ab.filter(b=>RS[b.id]?.ok==null).length;
+  return {qs,cer,ab,okc,pct,okA,pend, pass: c.umbral!=null && pct>=c.umbral && okA===ab.length};
+}
+function cerrarConjunto(key, c, r){
+  c.cerrado=true; const intento={t:Date.now(), pct:r.pct, ok:r.pass};
+  if(c.tipo==='unidad'){
+    const u = P().unidades[c.n] ||= {hist:[], mejor:0}; u.hist.push(intento); u.mejor=Math.max(u.mejor,r.pct);
+    if(r.pass && !u.completa){ u.completa=true; sumarXP(50); celebrar('¡Unidad completada!'); }
+  } else if(c.tipo==='prueba'){
+    const x = P().pruebas[c.id] ||= {hist:[], mejor:0}; x.hist.push(intento); x.mejor=Math.max(x.mejor,r.pct);
+    if(c.umbral!=null && r.pass && !x.ok){ x.ok=true; sumarXP(100); celebrar('¡Nivel superado!'); }
+  }
+  guardarEstado(); if(c.n) actualizarPasos(c.n);
+}
+function actualizarConjuntos(){
+  for(const [key,c] of Object.entries(CONJ)){
+    if(!c.fin) continue; const r=calcConjunto(c);
+    if(!c.cerrado && r.pend===0) cerrarConjunto(key,c,r);
+    const el=document.getElementById('res-'+key); if(el) el.innerHTML=resumenHTML(key,c,r);
+  }
+}
+function resumenHTML(key, c, r){
+  let h = `<div class="card"><h3 style="margin-top:0">Resultado: ${r.pct}% en preguntas cerradas (${r.okc} de ${r.cer.length})</h3>`;
+  if(r.ab.length) h += `<p>Respuestas abiertas o habladas aprobadas: ${r.okA} de ${r.ab.length}${r.pend?` · <b>faltan ${r.pend} por evaluar</b>`:''}</p>`;
+  if(c.tipo==='ubic'){
+    const nv = nivelesDe(curso).filter(l=>l.cargado).map(l=>{ const q=r.cer.filter(b=>l.units.includes(b.unit)); return q.length?{l,p:Math.round(100*q.filter(b=>RS[b.id]?.ok).length/q.length)}:null; }).filter(Boolean);
+    const rec = (nv.find(x=>x.p<60)||nv[nv.length-1])?.l;
+    h += `<p>${nv.map(x=>`${x.l.id}: ${x.p}%`).join(' · ')}</p>${rec?`<p>Te recomendamos empezar en <b>${rec.id}</b>. Es una orientación, no un diagnóstico.</p><button class="pri" data-act="inicio" data-v="${rec.units[0]}">Empezar en ${rec.nombre||rec.id}</button>`:''}</div>`;
+    return h;
+  }
+  if(r.pend===0){
+    h += r.pass ? `<p class="tag ok" style="display:block;padding:8px">✓ Superaste el mínimo de ${c.umbral}% y las tareas abiertas.</p>`
+      : `<p class="warn">Aún no llegas al mínimo (${c.umbral}% y todas las tareas abiertas aprobadas). Repasa y vuelve a intentarlo.</p>`;
+    const malas = r.cer.filter(b=>!RS[b.id]?.ok), sk = {}; malas.forEach(b=>{ (sk[b.attrs.skill||'general'] ||= []).push(b.id); });
+    if(!r.pass && malas.length) h += '<p><b>Qué repasar:</b></p><ul>'+Object.entries(sk).map(([k,v])=>`<li>${esc(k)}: ${v.map(esc).join(', ')}</li>`).join('')+'</ul>';
+    h += `<button data-act="reint" data-k="${esc(key)}">Intentar de nuevo</button>`;
+  }
+  if(c.tipo==='prueba') h += resultadoPrueba(c, r);
+  return h+'</div>';
+}
+function resultadoPrueba(c, r){
+  const sk={}; r.qs.forEach(b=>{ const k=b.attrs.skill||'general'; const o=sk[k] ||= {n:0,ok:0}; o.n++; if(RS[b.id]?.ok) o.ok++; });
+  let h = '<h3>Por habilidad</h3>'+Object.entries(sk).map(([k,o])=>`<p>${esc(k)}: ${o.ok}/${o.n}<div class="bar"><i style="width:${100*o.ok/o.n}%"></i></div></p>`).join('');
+  const doc = curso.docs.get(c.nivel);
+  const sec = doc?.docSections.find(s=>/lograr/i.test(s.title));
+  if(sec && r.pend===0){
+    const enun = [...sec.items.map(i=>i.text||'').join('\n').matchAll(/^\s*(\d+)\.\s+(.*)$/gm)].map(m=>[+m[1],m[2]]);
+    h += '<h3>Logros comprobados</h3>'+enun.map(([n,t])=>{ const qs=r.qs.filter(b=>+b.attrs.logro===n); const ok=qs.length&&qs.every(b=>RS[b.id]?.ok);
+      return `<div class="${ok?'tag ok':qs.length?'warn':'tag'}" style="display:block;margin:4px 0;border-radius:10px;padding:6px 10px">${ok?'✓':qs.length?'Por mejorar':'Sin preguntas'} · ${inline(t)}</div>`; }).join('');
+  }
+  const tb = doc?.blocks.find(b=>b.type==='table' && /no lo lograste/i.test(b.attrs.caption||''));
+  if(tb && !r.pass && r.pend===0) h += `<h3>Si no lo lograste</h3>`+renderTabla(tb.rows).replace(/(Unidad(?:es)?\s+)([\d\s,y–-]+)/g,(m,a,nums)=>a+nums.replace(/\d+/g,n=>`<a href="#/unidad/${n}">${n}</a>`));
+  return h;
+}
+function reintentar(key){
+  const c=CONJ[key]; c.qs.forEach(id=>{ delete Q[id]; delete RS[id]; delete REV[id]; delete P().respuestas[id]; });
+  c.fin=false; c.cerrado=false; guardarEstado(); render();
+}
+
+/* ---- Desbloqueos y progreso ---- */
+function pasoHecho(u, i){
+  const qs = qsDe(u.sections[i].items);
+  if(qs.length) return /^evaluacion/.test(normTit(u.sections[i].title)) ? !!P().unidades[u.n]?.completa : qs.every(b=>P().respuestas[b.id]);
+  return !!P().pasos[u.n]?.[i];
+}
+function actualizarPasos(n){
+  const u=curso.units.get(+n); if(!u) return; let hechos=0;
+  document.querySelectorAll(`details.paso[data-n="${n}"]`).forEach(d=>{ const ok=pasoHecho(u,+d.dataset.i); if(ok) hechos++; d.querySelector('summary .mk').textContent = ok?'✓':'○'; d.querySelector('summary .mk').style.color = ok?'var(--ok)':'var(--mut)'; });
+  const bar=document.getElementById('bar-'+n); if(bar) bar.style.width = Math.round(100*hechos/u.sections.length)+'%';
+}
+function minSeg(s){ const w=s.items.reduce((a,i)=>a+palabras(i.t==='md'?i.text:(i.b.raw||'')),0); return Math.min(45, Math.max(5, Math.round(w*0.15))); }
+
+/* ---- Pantallas ---- */
+const RANGOS = [[0,'Principiante'],[200,'Explorador'],[600,'Constante'],[1500,'Avanzado'],[3000,'Experto']];
+const semana = () => Array.from({length:7},(_,i)=>{ const d=new Date(); d.setDate(d.getDate()-(6-i)); return d.toISOString().slice(0,10); });
+const puntos = () => `<div class="dots" role="img" aria-label="Días practicados esta semana: ${semana().filter(d=>G().dias.includes(d)).length} de 7">${semana().map((d,i)=>`<i class="${G().dias.includes(d)?'on':''} ${i===6?'hoy':''}"></i>`).join('')}</div>`;
+const sigRango = xp => RANGOS.find(r=>r[0]>xp);
+function barraRango(){ const xp=G().xp, n=sigRango(xp), a=RANGOS.filter(r=>xp>=r[0]).pop()[0]; return `<p><b>${rango(xp)}</b> · ${xp} XP${n?` · faltan ${n[0]-xp} para ${n[1]}`:''}</p><div class="bar"><i style="width:${n?100*(xp-a)/(n[0]-a):100}%"></i></div>`; }
+function minimoDia(){
+  if(G().dias.includes(hoy())) return `<div class="card"><b style="color:var(--ok)">✓ Hoy ya cuenta.</b> Lo demás es extra.<p>${puntos()}</p></div>`;
+  const hay=mazo().length;
+  return `<div class="card"><small>Tu mínimo de hoy · menos de 2 minutos</small><p style="margin:.3em 0"><b>${hay?'Repasa 1 término':'Abre tu siguiente unidad y responde 1 pregunta'}</b></p><button class="pri" data-act="min1">Hacerlo ahora</button><p>${puntos()}</p></div>`;
+}
+function avisoRespaldo(){
+  if(!G().xp) return ''; const dias=S.respaldo?Math.floor((Date.now()-new Date(S.respaldo))/864e5):99;
+  return dias>=7 ? `<div class="card"><b>Copia de seguridad</b><p class="mut">${S.respaldo?`Pasaron ${dias} días desde tu última copia.`:'Aún no tienes copia.'} Guárdala fuera del teléfono (correo o Drive).</p><button data-act="exp">Exportar copia ahora</button></div>` : '';
+}
+const rango = xp => RANGOS.filter(r=>xp>=r[0]).pop()[1];
+function vUnidad(n){
+  const u = curso.units.get(+n);
+  if(!u) return `<h1>Unidad ${esc(n)}</h1><div class="card"><p>Esta unidad aún no está cargada.</p><a class="btn pri" href="#/perfil/contenido">Añadir contenido</a></div>`;
+  if(!desbloqueada(u.n)) return `<a href="#/ruta">‹ Ruta</a><h1>Unidad ${u.n}</h1><div class="card"><p>Se abre al completar la unidad anterior (o la Prueba de logro del nivel previo). Puedes activar "explorar libre" en Perfil.</p></div>`;
+  const key='u'+u.n, evalSec = u.sections[u.sections.length-1], eq = qsDe(evalSec.items).map(b=>b.id);
+  eq.forEach(id=>{ delete Q[id]; delete RS[id]; delete REV[id]; });
+  CONJ[key] = {tipo:'unidad', n:u.n, qs:eq, umbral:70};
+  const mejor = P().unidades[u.n];
+  return `<a href="#/ruta">‹ Ruta</a><h1>Unidad ${u.n}. ${esc(u.title)}</h1>
+  <p><span class="tag">${esc(nivelesDe(curso).find(l=>l.units.includes(u.n))?.nombre||u.doc||'')}</span> <span class="tag">${esc(u.meta.minutes||'?')} min</span> <span class="tag">${esc(u.meta.skills||'')}</span>${mejor?` <span class="tag ${mejor.completa?'ok':'mej'}">Mejor intento: ${mejor.mejor}%</span>`:''}</p>
+  <div class="bar"><i id="bar-${u.n}" style="width:0"></i></div>
+  <div class="card">${u.sections.map((s,i)=>{
+    const esEv = i===u.sections.length-1 && eq.length, hayQ = qsDe(s.items).length;
+    return `<details class="paso" data-n="${u.n}" data-i="${i}"><summary><span class="mk">○</span>&nbsp;${i+1}. ${esc(s.title)}</summary>
+    ${vItems(s.items,{modo:esEv?'bloque':'inline'})}
+    ${esEv?`<div class="row"><button class="pri" data-act="fin" data-k="${key}">Terminar y calificar</button></div><div id="res-${key}"></div><p><small>Se aprueba con 70% en las preguntas cerradas y las tareas abiertas aprobadas.</small></p>`
+      : hayQ ? '' : `<div class="row"><button data-act="paso" data-n="${u.n}" data-i="${i}" data-s="${minSeg(s)}">Marcar paso como visto</button></div>`}</details>`; }).join('')}</div>`;
+}
+function vRepaso(){
+  const due=vencidas(), err=(modelos[S.activo]?Object.keys(P().errores):[]).map(id=>curso.byId.get(id)).filter(b=>b&&visible(b));
+  return `<h1>Repaso</h1><div class="card"><h3 style="margin-top:0">Vocabulario de hoy</h3>${mazo().length?`<p>${due.length} palabras por repasar (sesión de ~5 minutos).</p><button class="pri" data-act="ses" ${due.length?'':'disabled'}>Empezar sesión</button>`:'<p class="mut">Aparecerán palabras de las unidades que ya empezaste.</p>'}<div id="ses"></div></div>
+  <h2>Cuaderno de errores</h2>${err.length?err.slice(0,15).map(b=>qHTML(b,'inline')).join(''):'<p class="mut">Sin errores pendientes.</p>'}`;
+}
+let SES = null;
+function pintarSesion(){
+  const el=document.getElementById('ses'); if(!el) return;
+  if(!SES || SES.i>=SES.c.length){ el.innerHTML = `<p class="tag ok" style="display:block;padding:8px">Sesión terminada: ${SES?SES.ok:0} de ${SES?SES.c.length:0} aciertos.</p>`; SES=null; return; }
+  const v=SES.c[SES.i]; let modo=SES.i%3; if(modo===2&&!v.ipa) modo=1; SES.modo=modo; SES.v=v;
+  let cuerpo;
+  if(modo===0){ const ops=mezclar([v,...mezclar(mazo().filter(x=>x.term!==v.term),v.term).slice(0,3)],v.term+SES.i); cuerpo=`<p><b>¿Qué significa «${esc(v.term)}»?</b></p>${ops.map(o=>`<button class="chip" data-act="rv" data-v="${esc(o.term)}">${esc(o.es)}</button> `).join('')}`; }
+  else { const hueco = modo===1 ? `<p>Completa: ${esc(v.ex.replace(new RegExp(v.term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i'),'_____'))}</p><p><small>${esc(v.es)}</small></p>` : `<p><button data-act="say" data-t="${esc(v.term)}">🔊 Escuchar</button> Escribe lo que oyes.</p>`;
+    cuerpo = hueco+`<input type="text" id="rvin" autocomplete="off" aria-label="Respuesta"><button class="pri" data-act="rv" data-v="__t">Comprobar</button>`; }
+  el.innerHTML = `<p><small>${SES.i+1} de ${SES.c.length}</small></p>${cuerpo}<div id="rvfb"></div>`;
+}
+function responderRepaso(val){
+  const v=SES.v; const ok = SES.modo===0 ? val===v.term : nz(document.getElementById('rvin').value)===nz(v.term);
+  const rec = PC(v.cid).vocab[v.key] || {c:0}, DIAS=[0,2,5,12,30]; rec.c = ok ? Math.min(rec.c+1,4) : 0;
+  const d = new Date(); d.setDate(d.getDate()+DIAS[rec.c]); rec.v = d.toISOString().slice(0,10); PC(v.cid).vocab[v.key]=rec;
+  sumarXP(ok?2:0); if(ok) SES.ok++; guardarEstado();
+  document.getElementById('rvfb').innerHTML = `<div class="${ok?'tag ok':'warn'}" style="display:block;padding:8px;border-radius:10px">${ok?'✓ Correcto':'Por mejorar'}: <b>${esc(v.term)}</b> = ${esc(v.es)}</div><button class="pri" data-act="rvn">Siguiente</button>`;
+}
+let EXA = null;
+function parseExam(b){
+  const secs=[];
+  b.raw.split('\n').forEach(l=>{
+    const m=/^\s*([^:]+):\s*(.*)$/.exec(l); if(!m) return; const ids=[];
+    const resto=m[2].replace(/(EX-[A-Z0-9]+-Q)(\d+)\s+a\s+EX-[A-Z0-9]+-Q(\d+)/g,(x,p,a,z)=>{ for(let i=+a;i<=+z;i++) ids.push(p+pad2(i)); return ''; });
+    (resto.match(/EX-[A-Z0-9]+-Q\d+/g)||[]).forEach(x=>ids.push(x));
+    if(ids.length) secs.push({name:m[1].trim(), ids, min:[...m[2].matchAll(/(\d+)\s*min/g)].reduce((a,x)=>a+ +x[1],0)||null});
+  });
+  const ruta = /ielts academic|general training|toefl/i;
+  return secs.some(s=>ruta.test(s.name)) ? secs.filter(s=>!ruta.test(s.name) || (metaCurso()==='academic'&&/academic/i.test(s.name)) || (metaCurso()==='general'&&/general/i.test(s.name)) || (metaCurso()==='toefl'&&/toefl/i.test(s.name))) : secs;
+}
+function vPrueba(id){
+  const b=curso.byId.get(id); if(!b||b.type!=='exam') return '<h1>Prueba no cargada</h1>';
+  const secs=parseExam(b).map(s=>({...s, ids:s.ids.filter(x=>curso.byId.has(x)&&visible(curso.byId.get(x)))})).filter(s=>s.ids.length);
+  const l = /EX-([A-Z0-9]+)-/.exec(id)[1];
+  EXA = {id, secs, i:0, fase:'intro', min:+b.attrs.minutes||secs.reduce((a,s)=>a+(s.min||0),0), nivel:l, fin:0};
+  return `<a href="#/ruta">‹ Ruta</a><h1>${esc(b.attrs.name||id)}</h1><div id="ex"></div>`;
+}
+function pintarPrueba(){
+  const el=document.getElementById('ex'); if(!el||!EXA) return; const x=EXA;
+  if(x.fase==='intro'){ el.innerHTML = `<div class="card"><p>${x.min} minutos · ${x.secs.map(s=>esc(s.name)+(s.min?' ('+s.min+' min)':'')).join(' → ')}</p><p class="mut">Modo examen: sin explicaciones hasta terminar, secciones en orden y audio con las reproducciones indicadas.</p><button class="pri" data-act="exgo">Comenzar</button></div>`; return; }
+  if(x.fase==='run'){ const s=x.secs[x.i];
+    el.innerHTML = `<div class="row"><b class="grow">${esc(s.name)} (${x.i+1}/${x.secs.length})</b><span class="tag" id="cron" role="timer"></span></div>${s.ids.map(i=>qHTML(curso.byId.get(i),'bloque')).join('')}<button class="pri" data-act="exnext">${x.i+1<x.secs.length?'Siguiente sección':'Terminar prueba'}</button>`; return; }
+  const key='ex:'+x.id, c=CONJ[key], r=calcConjunto(c);
+  el.innerHTML = `<div id="res-${esc(key)}">${resumenHTML(key,c,r)}</div><details><summary>Revisión de preguntas</summary>${c.qs.map(i=>qHTML(curso.byId.get(i),'bloque')).join('')}</details>`;
+}
+function terminarPrueba(){
+  clearInterval(EXA.t); const x=EXA, key='ex:'+x.id;
+  CONJ[key] = {tipo:'prueba', id:x.id, nivel:x.nivel, qs:x.secs.flatMap(s=>s.ids), umbral: /-1$/.test(x.id)?75:null};
+  x.fase='fin'; pintarPrueba(); terminarConjunto(key);
+}
+function vBiblioteca(){
+  const docs=[...curso.docs.values()];
+  const sec = s => `<details><summary>${esc(s.title)}</summary>${vItems(s.items,{noq:true})}</details>`;
+  return `<h1>Biblioteca</h1><p class="mut">${esc(nombreCurso(S.activo))}</p>
+  ${!hayContenido()?'<div class="card"><p>Aún no hay contenido cargado.</p><a class="btn pri" href="#/perfil/contenido">Añadir contenido</a></div>':''}
+  ${curso.portada?`<div class="card"><h2 style="margin-top:0">Portada e índice general</h2>${curso.portada.docSections.map(sec).join('')}</div>`:''}
+  ${docs.map(d=>`<div class="card"><h2 style="margin-top:0">${esc(d.title||'Documento '+d.id)}</h2>${d.docSections.map(sec).join('')}</div>`).join('')}`;
+}
+/* ============ 6b. VARIOS CURSOS: estado, registro, importación ============ */
+function progresoBase(){ return {unidades:{}, respuestas:{}, pasos:{}, pruebas:{}, vocab:{}, errores:{}, checks:{}, inicio:0}; }
+function estadoInicial(){ return {v:2, activo:'', cursosInfo:{}, global:{xp:0, dias:[]}, cursos:{}, respaldo:null, ajustes:{tema:'auto', fuente:100, voz:'en-US', umbral:0.8, explorar:false, ia:{url:'', key:'', model:''}}}; }
+function normalizar(){
+  const d = estadoInicial();
+  if(S.progreso){   // migración desde la versión de un solo curso: ese avance pasa al curso "ingles"
+    const pr = S.progreso; S.global = {xp:pr.xp||0, dias:pr.dias||[]}; delete pr.xp; delete pr.dias;
+    S.cursos = S.cursos || {}; S.cursos.ingles = S.cursos.ingles || {meta:S.meta||'academic', progreso:pr};
+    S.activo = S.activo || 'ingles'; delete S.progreso; delete S.meta;
+  }
+  S.ajustes = Object.assign(d.ajustes, S.ajustes); S.ajustes.ia = Object.assign(d.ajustes.ia, S.ajustes.ia);
+  S.global = Object.assign(d.global, S.global); S.cursos = S.cursos || {}; S.cursosInfo = S.cursosInfo || {}; S.activo = S.activo || ''; S.v = 2;
+}
+const PC = id => { const c = S.cursos[id] ||= {meta:'academic'}, b = progresoBase(); c.progreso ||= {}; for(const k in b) if(!(k in c.progreso)) c.progreso[k]=b[k]; return c.progreso; };
+const P = () => PC(S.activo || '_');
+const G = () => S.global;
+const metaCurso = () => S.cursos[S.activo]?.meta || 'academic';
+
+const CODES = ['A1','A2','B1','B2','C1','C2'];
+const slug = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40) || 'curso';
+const cursoDeclarado = t => (/^(?:meta:|#)[^\n]*\bcurso=([\w-]+)/mi.exec(t)||[])[1] || '';
+const nombreCurso = id => S.cursosInfo[id]?.nombre || id;
+const iconoCurso = id => S.cursosInfo[id]?.icono || '📘';
+const asignar = (p, cid) => { p.k = p.k || p.key; p.curso = cid; p.key = cid+'::'+p.k; return p; };
+const usaMetas = m => [...m.byId.values()].some(b=>/^(academic|general|toefl|ielts)$/i.test(b.attrs.exam||''));
+function infoCurso(id, m){
+  const i = S.cursosInfo[id] ||= {}, por = m.portada;
+  if(por){ const t = por.meta.titulo || por.docSections.find(s=>s.title!=='(inicio)')?.title; if(t) i.nombre = t; if(por.meta.icono) i.icono = por.meta.icono; }
+  i.nombre ||= id;
+}
+async function leerPacks(){
+  const m = new Map();
+  if(COURSE_MD.trim()) dividirPaquetes(COURSE_MD).packs.forEach(p=>{ const q=asignar({...p}, cursoDeclarado(COURSE_MD)||'curso'); q.embebido=true; m.set(q.key,q); });
+  const guardados = (_db ? await idb('packs','readonly',s=>s.getAll()) : [..._memPacks.values()]) || [];
+  for(const p of guardados){
+    if(p.curso) m.set(p.key,p);
+    else { const q=asignar({...p}, cursoDeclarado(p.md)||'ingles'); await borrarPack(p.key); await guardarPack(q); m.set(q.key,q); }  // migración de la versión de un solo curso
+  }
+  return m;
+}
+async function recargarCurso(){
+  packs = await leerPacks();
+  const g = {}; packs.forEach(p=>{ (g[p.curso] ||= new Map()).set(p.k, p); });
+  modelos = {}; for(const id in g){ modelos[id] = construirCurso(g[id]); infoCurso(id, modelos[id]); }
+  if(!modelos[S.activo]) S.activo = Object.keys(modelos).length===1 ? Object.keys(modelos)[0] : '';
+  activarModelo(); guardarEstado();
+}
+function activarModelo(){
+  curso = modelos[S.activo] || construirCurso(new Map()); avisos = validar(curso); indiceBusqueda = []; let u = null;
+  [...packs.values()].filter(p=>p.curso===S.activo).forEach(p=>String(p.md).split('\n').forEach(l=>{
+    const m=/^#\s+Unidad\s+(\d+)/i.exec(l); if(m) u=+m[1]; else if(/^#\s+(DOCUMENTO|PORTADA)/i.test(l)) u=null;
+    if(l.trim() && !/^\s*:::/.test(l)) indiceBusqueda.push({u, t:l.trim()});
+  }));
+}
+function activar(id){ if(!modelos[id]) return; S.activo = id; activarModelo(); guardarEstado(); }
+const hayContenido = () => curso.units.size || curso.docs.size || curso.portada;
+
+/* Niveles = documentos del curso (A1…C2 son solo identificadores técnicos) */
+function nivelesDe(m){
+  const por = {}; m.units.forEach(u=>{ (por[u.doc || CODES[Math.min(5,Math.floor((u.n-1)/6))]] ||= []).push(u.n); });
+  m.docs.forEach((d,id)=>{ por[id] ||= []; });
+  let tot = 0; m.docs.forEach(d=>{ tot = Math.max(tot, +String(d.meta.doc||'').split('/')[1]||0); });
+  const idx = Object.keys(por).map(id=>CODES.indexOf(id)), max = Math.max(tot, idx.length ? Math.max(...idx)+1 : 0), out = [];
+  for(let i=0;i<max;i++){ const id=CODES[i], us=(por[id]||[]).sort((a,b)=>a-b), d=m.docs.get(id); out.push({id, nombre:d?.meta.nombre||'', units:us, cargado:us.length>0||!!d}); }
+  return out;
+}
+function desbloqueada(n, m=curso, pr=P()){
+  if(S.ajustes.explorar || n<=pr.inicio) return true;
+  const niv = nivelesDe(m).filter(l=>l.cargado), l = niv.find(x=>x.units.includes(n)); if(!l) return true;
+  const i = l.units.indexOf(n); if(i>0) return !!pr.unidades[l.units[i-1]]?.completa;
+  const prev = niv[niv.indexOf(l)-1]; if(!prev) return true;
+  const ex = 'EX-'+prev.id+'-1';
+  return m.byId.has(ex) ? !!pr.pruebas[ex]?.ok : prev.units.every(u=>pr.unidades[u]?.completa);
+}
+function avance(cid){
+  const m = modelos[cid], pr = PC(cid); let tot=0, ok=0, hechas=0;
+  m.units.forEach((u,n)=>{ const w=+u.meta.minutes||35; tot+=w; if(pr.unidades[n]?.completa){ ok+=w; hechas++; } });
+  nivelesDe(m).filter(l=>l.cargado).forEach(l=>{ const ex='EX-'+l.id+'-1'; if(m.byId.has(ex)){ tot+=30; if(pr.pruebas[ex]?.ok) ok+=30; } });
+  const sig = [...m.units.keys()].sort((a,b)=>a-b).find(n=>!pr.unidades[n]?.completa && desbloqueada(n,m,pr));
+  return {pct: !tot ? 0 : ok>=tot ? 100 : Math.min(99,Math.round(100*ok/tot)), hechas, total:m.units.size, sig};
+}
+const mazo = () => { const m=[]; for(const [cid,mod] of Object.entries(modelos)){ const pr=PC(cid); mod.units.forEach(u=>{ if(pr.pasos[u.n]?.some(Boolean)||pr.unidades[u.n]) u.sections.forEach(s=>s.items.forEach(i=>{ if(i.t==='block'&&i.b.type==='vocab') i.b.rows.forEach(v=>m.push({...v, cid, key:u.n+'|'+v.term})); })); }); } return m; };
+const vencidas = () => mazo().filter(v=>{ const r=PC(v.cid).vocab[v.key]; return !r || r.v<=hoy(); });
+
+/* ---- Pantallas generales ---- */
+function selectorMeta(){ return `<div class="row" role="group" aria-label="Meta">${Object.entries(METAS).map(([k,v])=>`<button class="chip ${metaCurso()===k?'on':''}" data-act="meta" data-v="${k}" aria-pressed="${metaCurso()===k}">${v}</button>`).join('')}</div>`; }
+const vBienvenida = () => `<h1>Mi Academia</h1><p>Aquí viven todos tus cursos, con su ruta, práctica y progreso guardado en este teléfono.</p><div class="card"><b>Aún no tienes cursos.</b><p class="mut">Añade los archivos .md de tu primer curso (Formato Academia).</p><a class="btn pri" href="#/perfil/contenido">Añadir curso</a></div>`;
+function tarjetaCurso(id){
+  const a = avance(id);
+  return `<a class="card curso" href="#/curso/${esc(id)}"><div class="row"><span style="font-size:2rem" aria-hidden="true">${esc(iconoCurso(id))}</span><div class="grow"><b>${esc(nombreCurso(id))}</b><br><small class="mut">${a.hechas} de ${a.total} unidades${a.sig?` · sigue: Unidad ${a.sig}`:''}</small></div>${anillo(a.pct,52)}</div></a>`;
+}
+function vInicio(){
+  const ids = Object.keys(modelos); if(!ids.length) return vBienvenida();
+  return `<h1>Mis cursos</h1>${minimoDia()}${avisoRespaldo()}<div class="card">${barraRango()}</div>${ids.map(tarjetaCurso).join('')}<a class="btn" href="#/perfil/contenido">➕ Añadir curso o contenido</a>`;
+}
+const vElegir = () => `<h1>Elige un curso</h1>${Object.keys(modelos).map(tarjetaCurso).join('')}`;
+function nivelCard(l){
+  const pr = P(), hechos = l.units.filter(n=>pr.unidades[n]?.completa).length, exId = 'EX-'+l.id+'-1', ex = curso.byId.get(exId), todas = l.units.length && hechos===l.units.length;
+  if(!l.cargado) return `<div class="card"><div class="row"><h3 class="grow" style="margin:0">${esc(l.nombre||l.id)}</h3><span class="tag">Próximamente</span></div><p class="mut">Carga el Documento ${l.id} de este curso.</p></div>`;
+  return `<div class="card"><div class="row"><h3 class="grow" style="margin:0">${esc(l.nombre||l.id)}</h3>${anillo(l.units.length?Math.round(100*hechos/l.units.length):0,48)}</div>
+  ${pr.pruebas[exId]?.ok?'<p><b style="color:var(--ok)">Nivel superado</b></p>':''}
+  <div>${l.units.map(n=>{ const ok=pr.unidades[n]?.completa, lock=!desbloqueada(n); return `<a class="urow ${ok?'ok':''} ${lock?'lock':''}" href="#/unidad/${n}"><b>${ok?'✓':lock?'🔒':'○'}</b><span class="grow">Unidad ${n}. ${esc(curso.units.get(n).title)}</span></a>`; }).join('')}</div>
+  ${ex?`<p><a class="btn" href="#/prueba/${esc(exId)}" ${todas||S.ajustes.explorar?'':'aria-disabled="true" style="opacity:.55"'}>${esc(ex.attrs.name||'Prueba de logro')}</a></p>`:''}</div>`;
+}
+function vRuta(){
+  if(!hayContenido()) return '<a href="#/inicio">‹ Mis cursos</a>'+vBienvenida();
+  const a = avance(S.activo), due = vencidas().filter(v=>v.cid===S.activo).length;
+  return `<a href="#/inicio">‹ Mis cursos</a><div class="row"><div class="grow"><h1>${esc(iconoCurso(S.activo))} ${esc(nombreCurso(S.activo))}</h1><p class="mut">${a.hechas} de ${a.total} unidades completadas</p></div>${anillo(a.pct,64)}</div>
+  ${usaMetas(curso)?`<div class="card"><h3 style="margin-top:0">Mi meta en este curso</h3>${selectorMeta()}</div>`:''}
+  ${a.sig?`<div class="card"><small>Siguiente</small><h3 style="margin:.2em 0">Unidad ${a.sig}. ${esc(curso.units.get(a.sig).title)}</h3><a class="btn pri" href="#/unidad/${a.sig}">Continuar</a></div>`:''}
+  ${due?`<div class="card"><b>Repaso de hoy:</b> ${due} términos de este curso <a href="#/repaso">Repasar 5 minutos</a></div>`:''}${nivelesDe(curso).map(nivelCard).join('')}`;
+}
+const vNota = () => `<a href="#/ruta">‹ Volver</a><h1>VERIFICAR en el sitio oficial</h1><div class="card"><p>Los datos marcados (precios, formatos, duraciones, puntajes, normas, versiones) pueden haber cambiado. Confírmalos en el sitio oficial de la fuente que nombra el curso.</p><p>Las equivalencias de puntaje o de nivel son siempre aproximadas.</p></div>`;
+
+/* ---- Importador de cursos ---- */
+let pendientes = null;
+const destinoFinal = p => p.declCurso || (pendientes.dest==='__nuevo' ? slug(pendientes.nuevo||'curso-nuevo') : pendientes.dest);
+function huerfanas(antes, despues, cid){ return Object.keys(PC(cid).respuestas||{}).filter(id=>antes?.byId.has(id) && !despues.byId.has(id)); }
+function resumenPack(p, cid){
+  const r = parsePaquete(p), k = contar([r]);
+  const nom = p.kind==='doc' ? 'Documento '+p.id+(p.parte>1?' · parte '+p.parte:'') : p.kind==='portada' ? 'Portada e índice general' : 'Unidad '+p.id;
+  const us = r.units.length ? `Unidades ${r.units.map(u=>u.n).join(', ')}` : '';
+  return `<li><b>${nom}</b>${packs.has(cid+'::'+p.key)?' <span class="tag mej">reemplaza lo cargado</span>':' <span class="tag ok">nuevo</span>'}<br><small>${[us,k.q&&k.q+' preguntas',k.audio&&k.audio+' audios',k.passage&&k.passage+' textos',k.chart&&k.chart+' gráficos',k.image&&k.image+' imágenes',k.table&&k.table+' tablas',k.vocab&&k.vocab+' términos'].filter(Boolean).join(' · ')}</small></li>`;
+}
+function vPrevia(){
+  const x = pendientes, ids = Object.keys(modelos), sin = x.packs.some(p=>!p.declCurso), grupos = new Map();
+  x.packs.forEach(p=>{ const cid=destinoFinal(p); if(!grupos.has(cid)) grupos.set(cid,[]); grupos.get(cid).push(p); });
+  const destino = sin ? `<div class="card"><b>¿A qué curso pertenece este archivo?</b><p class="mut"><small>No trae <code>curso=</code>.</small></p>
+    <select id="dest" aria-label="Curso destino">${ids.map(id=>`<option value="${esc(id)}" ${x.dest===id?'selected':''}>${esc(nombreCurso(id))}</option>`).join('')}<option value="__nuevo" ${x.dest==='__nuevo'?'selected':''}>➕ Curso nuevo</option></select>
+    ${x.dest==='__nuevo'?`<input type="text" id="destnom" placeholder="Nombre del curso" value="${esc(x.nuevo||'')}" aria-label="Nombre del curso nuevo" style="margin-top:8px">`:''}</div>` : '';
+  const bloques = [...grupos].map(([cid,ps])=>{
+    const mapa = new Map([...packs.values()].filter(q=>q.curso===cid).map(q=>[q.k,q])); ps.forEach(p=>mapa.set(p.key,{...p,curso:cid,k:p.key}));
+    const nuevo = construirCurso(mapa), w = validar(nuevo), hu = huerfanas(modelos[cid], nuevo, cid);
+    return `<div class="card"><h3 style="margin-top:0">${modelos[cid]?esc(nombreCurso(cid)):'Curso nuevo: '+esc(cid)}</h3><ul>${ps.map(p=>resumenPack(p,cid)).join('')}</ul>
+    ${hu.length?`<div class="warn">${hu.length} respuestas guardadas quedarían huérfanas (IDs que ya no existen): ${esc(hu.slice(0,6).join(', '))}…</div>`:''}${listaAvisos(w,10)}</div>`;
+  }).join('');
+  return `${x.errores.map(e=>`<div class="warn">${esc(e)}</div>`).join('')}${destino}${bloques}<div class="row"><button class="pri" data-act="confirmar" ${x.packs.length?'':'disabled'}>Guardar</button><button data-act="cancelar">Cancelar</button></div>`;
+}
+async function leerArchivos(files){
+  const res = {packs:[], errores:[], dest:'__nuevo', nuevo:''};
+  for(const f of files){
+    let t; try{ t = await f.text(); }catch{ res.errores.push(`${f.name}: no se pudo leer`); continue; }
+    const d = dividirPaquetes(t); if(d.error){ res.errores.push(`${f.name}: ${d.error}`); continue; }
+    const decl = cursoDeclarado(t);
+    d.packs.forEach(p=>{ p.declCurso=decl; const i=res.packs.findIndex(x=>x.key===p.key && x.declCurso===decl); if(i>=0) res.packs[i]=p; else res.packs.push(p); });
+  }
+  const duenos = new Set(res.packs.filter(p=>!p.declCurso).map(p=>[...packs.values()].find(q=>q.k===p.key)?.curso));
+  if(duenos.size===1 && [...duenos][0]) res.dest = [...duenos][0];
+  const por = res.packs.find(p=>p.kind==='portada'); if(por){ const r=parsePaquete(por); res.nuevo = r.meta.titulo || r.docSections.find(s=>s.title!=='(inicio)')?.title || ''; }
+  pendientes = res; $('#prev').innerHTML = vPrevia();
+}
+function vContenido(){
+  const por = {}; [...packs.values()].forEach(p=>(por[p.curso] ||= []).push(p));
+  return `<a href="#/perfil">‹ Perfil</a><h1>Añadir contenido</h1><p class="mut">Cada archivo declara su curso con <code>curso=</code>. Si no lo trae, eliges a qué curso va.</p>
+  <div class="drop" id="drop"><p>Arrastra aquí uno o varios archivos .md</p><label class="btn pri" for="files" tabindex="0">Elegir archivos</label><input type="file" id="files" accept=".md,.txt,text/markdown,text/plain" multiple hidden></div>
+  <div id="prev">${pendientes?vPrevia():''}</div><h2>Mis cursos</h2>
+  ${Object.keys(por).map(cid=>`<div class="card"><div class="row"><b class="grow">${esc(iconoCurso(cid))} ${esc(nombreCurso(cid))}</b><button data-act="borrarcurso" data-c="${esc(cid)}">Eliminar curso</button></div>${por[cid].sort((a,b)=>a.k.localeCompare(b.k)).map(p=>`<div class="row"><span class="grow"><small>${esc(p.k)}</small>${p.embebido?' <span class="tag">embebido</span>':''}</span>${p.embebido?'':`<button data-act="borrar" data-k="${esc(p.key)}">Quitar</button>`}</div>`).join('')}</div>`).join('') || '<p class="mut">Nada todavía.</p>'}`;
+}
+function vUbicacion(){
+  const niv = nivelesDe(curso).filter(l=>l.cargado), qs = [];
+  niv.forEach(l=>{ const pool=[...curso.byId.values()].filter(b=>b.type==='q'&&b.attrs.mode==='graded'&&['mcq','tfng','fill'].includes(b.qtype)&&l.units.includes(b.unit)&&!b.attrs.audio&&!b.attrs.passage&&!b.attrs.chart&&visible(b)); mezclar(pool,'ub'+l.id).slice(0,4).forEach(b=>qs.push(b.id)); });
+  if(niv.length<2 || qs.length<6) return '<a href="#/perfil">‹ Perfil</a><h1>Prueba de ubicación</h1><div class="card"><p>Necesita al menos 2 niveles cargados en este curso.</p></div>';
+  qs.forEach(id=>{ delete Q[id]; delete RS[id]; delete REV[id]; }); CONJ.ubic = {tipo:'ubic', qs, umbral:null};
+  return `<a href="#/perfil">‹ Perfil</a><h1>Prueba de ubicación</h1><p class="mut">Orientativa: usa preguntas del propio curso y no sustituye una evaluación oficial.</p>${qs.map(id=>qHTML(curso.byId.get(id),'bloque')).join('')}<button class="pri" data-act="fin" data-k="ubic">Ver resultado</button><div id="res-ubic"></div>`;
+}
+function vPerfil(){
+  const a = S.ajustes, ids = Object.keys(modelos), act = modelos[S.activo] ? true : false, sk = {};
+  if(act) Object.entries(P().respuestas).forEach(([id,r])=>{ const k=curso.byId.get(id)?.attrs.skill||'otra'; const o=sk[k] ||= {n:0,ok:0}; o.n++; if(r.ok) o.ok++; });
+  const prs = ids.map(PC), nu = prs.reduce((s,p)=>s+Object.values(p.unidades).filter(u=>u.completa).length,0), aciertos = prs.reduce((s,p)=>s+Object.values(p.respuestas).filter(r=>r.ok).length,0);
+  const ins = [['Primera unidad',nu>=1],['3 unidades',nu>=3],['Primer nivel',prs.some(p=>Object.values(p.pruebas).some(x=>x.ok))],['7 días de práctica',G().dias.length>=7],['30 días de práctica',G().dias.length>=30],['100 aciertos',aciertos>=100],['500 XP',G().xp>=500],['1000 XP',G().xp>=1000]];
+  return `<h1>Perfil</h1>
+  <div class="card">${barraRango()}<p>${G().dias.length} días de práctica en total (nunca se reinicia)</p>${puntos()}<p>${ins.map(([n,ok])=>`<span class="tag ${ok?'ok':''}">${ok?'✓ ':''}${n}</span>`).join(' ')}</p></div>
+  ${ids.length?`<div class="card"><h3 style="margin-top:0">Mis cursos</h3>${ids.map(id=>`<a class="urow" href="#/curso/${esc(id)}"><b>${esc(iconoCurso(id))}</b><span class="grow">${esc(nombreCurso(id))}</span></a>`).join('')}</div>`:''}
+  ${act?`<div class="card"><h3 style="margin-top:0">${esc(nombreCurso(S.activo))}: avance</h3>${Object.entries(sk).map(([k,o])=>`<p>${esc(k)}: ${o.ok}/${o.n}<div class="bar"><i style="width:${100*o.ok/o.n}%"></i></div></p>`).join('')||'<p class="mut">Aún sin respuestas.</p>'}
+    ${Object.entries(P().pruebas).map(([k,x])=>`<p>${esc(k)}: mejor ${x.mejor}% · ${x.hist.length} intento(s) ${x.ok?'<span class="tag ok">superada</span>':''}</p>`).join('')}
+    ${usaMetas(curso)?`<h3>Mi meta</h3>${selectorMeta()}`:''}${nivelesDe(curso).filter(l=>l.cargado).length>1?'<p><a class="btn" href="#/ubicacion">Prueba de ubicación</a></p>':''}</div>`:''}
+  <div class="card"><h3 style="margin-top:0">Ajustes</h3>
+    <label>Tema<select data-aj="tema"><option value="auto" ${a.tema==='auto'?'selected':''}>Automático</option><option value="light" ${a.tema==='light'?'selected':''}>Claro</option><option value="dark" ${a.tema==='dark'?'selected':''}>Oscuro</option></select></label>
+    <label>Tamaño de letra<select data-aj="fuente">${[90,100,115,130].map(v=>`<option value="${v}" ${a.fuente===v?'selected':''}>${v}%</option>`).join('')}</select></label>
+    <label>Voz y dictado (cursos con audio en inglés)<select data-aj="voz"><option value="en-US" ${a.voz==='en-US'?'selected':''}>Americano</option><option value="en-GB" ${a.voz==='en-GB'?'selected':''}>Británico</option></select></label>
+    <label>Exigencia al repetir en voz alta<select data-aj="umbral">${[.6,.7,.8,.9].map(v=>`<option value="${v}" ${a.umbral===v?'selected':''}>${v*100}%</option>`).join('')}</select></label>
+    <label class="opt"><input type="checkbox" data-aj="explorar" ${a.explorar?'checked':''}> <span>Explorar libre (abre todo, sin XP de avance oficial)</span></label></div>
+  <div class="card"><h3 style="margin-top:0">IA para respuestas abiertas</h3><p><small>Se guarda solo en este dispositivo y se envía únicamente a tu endpoint cuando evalúas una respuesta. Sin esto usarás autoevaluación guiada.</small></p>
+    <label>Endpoint<input type="text" data-aj="ia.url" value="${esc(a.ia.url)}"></label><label>Clave<input type="text" data-aj="ia.key" value="${esc(a.ia.key)}"></label><label>Modelo<input type="text" data-aj="ia.model" value="${esc(a.ia.model)}"></label></div>
+  <div class="card"><h3 style="margin-top:0">App en tu teléfono</h3><p id="pst">${estadoApp()}</p>${DEFER?'<button class="pri" data-act="inst">Instalar como app</button>':''}<p class="mut"><small>Última copia: ${S.respaldo?new Date(S.respaldo).toLocaleDateString('es'):'ninguna'}</small></p></div>
+  <div class="card"><h3 style="margin-top:0">Copia y contenido</h3><div class="row"><button data-act="exp">Exportar copia completa</button><label class="btn" for="imp" tabindex="0">Importar copia</label><input type="file" id="imp" accept=".json" hidden></div><div class="row" style="margin-top:10px"><a class="btn pri" href="#/perfil/contenido">Añadir contenido</a><a class="btn" href="#/perfil/verificar">Verificar curso</a></div></div>`;
+}
+function render(){
+  if(EXA) clearInterval(EXA.t); EXA = null; window.speechSynthesis?.cancel();
+  let h = (location.hash.slice(1)||'/inicio').split('/').filter(Boolean);
+  if(h[0]==='curso'){ if(modelos[h[1]] && S.activo!==h[1]) activar(h[1]); h = h.slice(2); if(!h.length) h=['ruta']; }
+  const [a,b] = h; let html;
+  const sinActivo = !modelos[S.activo] && Object.keys(modelos).length;
+  if(sinActivo && ['ruta','unidad','prueba','ubicacion','biblioteca','buscar'].includes(a)) html = vElegir();
+  else if(a==='unidad') html=vUnidad(b); else if(a==='prueba') html=vPrueba(b); else if(a==='repaso') html=vRepaso(); else if(a==='ubicacion') html=vUbicacion();
+  else if(a==='ruta') html=vRuta(); else if(a==='biblioteca') html=vBiblioteca(); else if(a==='buscar') html=vBuscar();
+  else if(a==='perfil') html = b==='contenido'?vContenido() : b==='verificar'?vVerificar() : vPerfil();
+  else if(a==='nota-verificar') html=vNota(); else html=vInicio();
+  $('#app').innerHTML = html; window.scrollTo(0,0);
+  const activa = ['ruta','unidad','prueba','inicio',undefined].includes(a) ? 'inicio' : a==='nota-verificar' ? 'biblioteca' : a==='ubicacion' ? 'perfil' : a;
+  document.querySelectorAll('nav.tabs a').forEach(t=>{ if(t.dataset.tab===activa) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current'); });
+  if(a==='buscar') $('#q').addEventListener('input', e=>{ $('#res').innerHTML = buscar(e.target.value); });
+  if(a==='perfil' && b==='contenido') enlazarImportador();
+  if(a==='unidad' && !sinActivo) actualizarPasos(b);
+  if(a==='prueba' && !sinActivo) pintarPrueba();
+  if(a==='repaso' && SES) pintarSesion();
+}
+
+/* ============ 8. ENRUTADO Y EVENTOS ============ */
+let NOVOZ = false;
+/* ---- Enrutado ---- */
+function reproducir(el){
+  const key=el.dataset.key, a=curso.byId.get(el.dataset.a), modelo=el.dataset.modelo==='1', max=modelo?Infinity:(+a.attrs.plays||1), ext=AUDIO_FILES[a.id];
+  if((PL[key]||0)>=max) return;
+  if(!ext && (!('speechSynthesis' in window) || !hayVoces())){ NOVOZ=true; toast('Este dispositivo no tiene voces en inglés: puedes leer el guion.'); }
+  else { PL[key]=(PL[key]||0)+1; const rate = modelo ? +el.closest('.au').querySelector('[data-vel]').value : (a.attrs.speed==='slow'?0.8:1);
+    if(ext){ const au=new Audio(ext); au.playbackRate=rate; au.play(); } else hablar(segmentos(a), null, rate); }
+  const q=el.closest('.q'); if(q) refrescarQ(q.id.slice(2)); else el.closest('.au').outerHTML = audioHTML(a,key,{modelo});
+}
+function tic(){
+  if(!EXA||EXA.fase!=='run') return; const r=Math.max(0,Math.round((EXA.fin-Date.now())/1000)), c=document.getElementById('cron');
+  if(c) c.textContent=`${Math.floor(r/60)}:${pad2(r%60)}`; if(r<=0) terminarPrueba();
+}
+async function exportar(){
+  const blob=new Blob([JSON.stringify({app:'academia-ingles-v1', packs:[...packs.values()].filter(p=>!p.embebido), estado:S})],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='academia-respaldo-'+hoy()+'.json'; a.click(); S.respaldo=new Date().toISOString(); guardarEstado(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+async function importar(f){
+  try{ const d=JSON.parse(await f.text()); if(d.app!=='academia-ingles-v1') throw 0;
+    for(const p of d.packs) await guardarPack(p); S=Object.assign(estadoInicial(),d.estado); normalizar(); guardarEstado(); aplicarAjustes(); await recargarCurso(); toast('Copia restaurada'); render();
+  }catch{ toast('Ese archivo no es una copia válida'); }
+}
+function setResp(el){
+  const id=el.dataset.q, k=el.dataset.r; if(!id||!k) return;
+  if(k==='v') Q[id]=el.value; else if(k==='m'){ const s=new Set(Q[id]); el.checked?s.add(el.value):s.delete(el.value); Q[id]=[...s]; }
+  else if(k==='k') Q[id]={...Q[id],[el.dataset.k]:el.value}; else if(k==='i'){ const a=[...Q[id]]; a[+el.dataset.i]=el.value; Q[id]=a; }
+  const c=document.getElementById('cnt-'+id); if(c) c.textContent=palabras(Q[id])+' palabras';
+}
+function ajuste(el){
+  const p=el.dataset.aj, v = el.type==='checkbox' ? el.checked : (p==='fuente'||p==='umbral') ? +el.value : el.value;
+  if(p.startsWith('ia.')) S.ajustes.ia[p.slice(3)]=v; else S.ajustes[p]=v; guardarEstado(); aplicarAjustes();
+}
+document.addEventListener('input', e=>{ setResp(e.target); if(e.target.id==='destnom' && pendientes) pendientes.nuevo=e.target.value; });
+document.addEventListener('change', e=>{ setResp(e.target); if(e.target.id==='dest' && pendientes){ pendientes.dest=e.target.value; $('#prev').innerHTML=vPrevia(); } if(e.target.dataset.aj) ajuste(e.target); if(e.target.id==='imp' && e.target.files[0]) importar(e.target.files[0]); });
+document.addEventListener('click', e=>{
+  const sm=e.target.closest('summary'); if(sm){ const d=sm.parentElement; if(d.classList.contains('paso')) ABIERTO[d.dataset.n+':'+d.dataset.i] ||= Date.now(); }
+  const el=e.target.closest('[data-act]'); if(!el) return; const id=el.dataset.q;
+  switch(el.dataset.act){
+    case 'chk': comprobar(id); break;
+    case 'tf': Q[id]=el.dataset.v; refrescarQ(id); break;
+    case 'mov': { const i=+el.dataset.i, j=i+ +el.dataset.d, r=Q[id]; if(j>=0&&j<r.length){ [r[i],r[j]]=[r[j],r[i]]; refrescarQ(id); } break; }
+    case 'mic': dictar(id, el); break;
+    case 'say': decir(el.dataset.t); break;
+    case 'sayq': { const b=curso.byId.get(id), ext=AUDIO_FILES[b.attrs.audio]; if(ext) new Audio(ext).play(); else decir(b.f.target.replace(/^["“]|["”]$/g,'')); break; }
+    case 'auto': { const b=curso.byId.get(id), ok=el.dataset.v==='1'; RS[id]={ok, auto:true}; registrar(b,ok,{auto:true}); refrescarQ(id); break; }
+    case 'au': reproducir(el); break;
+    case 'auri': { PL[el.dataset.key]=0; const q=el.closest('.q'); if(q) refrescarQ(q.id.slice(2)); break; }
+    case 'paso': { const n=el.dataset.n, i=+el.dataset.i, falta=Math.ceil(+el.dataset.s-(Date.now()-(ABIERTO[n+':'+i]||Date.now()))/1000);
+      if(falta>0){ toast(`Lee un poco más: faltan ${falta} s`); break; }
+      (P().pasos[n] ||= [])[i]=true; sumarXP(2); guardarEstado(); actualizarPasos(n); break; }
+    case 'cl': P().checks[el.dataset.k]=el.checked; guardarEstado(); break;
+    case 'fin': terminarConjunto(el.dataset.k); break;
+    case 'reint': reintentar(el.dataset.k); break;
+    case 'ses': SES={c:mezclar(vencidas(),hoy()).slice(0,10),i:0,ok:0}; pintarSesion(); break;
+    case 'rv': responderRepaso(el.dataset.v); break;
+    case 'rvn': SES.i++; pintarSesion(); break;
+    case 'exgo': EXA.fase='run'; EXA.fin=Date.now()+EXA.min*60000; EXA.t=setInterval(tic,1000); pintarPrueba(); tic(); break;
+    case 'exnext': if(EXA.i+1<EXA.secs.length){ EXA.i++; pintarPrueba(); window.scrollTo(0,0); } else terminarPrueba(); break;
+    case 'inicio': P().inicio=+el.dataset.v; guardarEstado(); toast('Listo: tu ruta empieza ahí'); break;
+    case 'exp': exportar(); break;
+    case 'inst': if(DEFER){ DEFER.prompt(); DEFER=null; } break;
+    case 'min1': { const v=vencidas(), base=v.length?v:mazo();
+      if(base.length){ SES={c:mezclar(base,hoy()).slice(0,1),i:0,ok:0}; location.hash='#/repaso'; }
+      else { const id=Object.keys(modelos).find(c=>avance(c).sig); if(id) location.hash=`#/curso/${id}/unidad/${avance(id).sig}`; else toast('Aún no hay nada por hacer'); } break; }
+  }
+});
+
+function enlazarImportador(){
+  const dz=$('#drop'), inp=$('#files');
+  inp.addEventListener('change', e=>leerArchivos([...e.target.files]));
+  ['dragover','dragenter'].forEach(ev=>dz.addEventListener(ev,e=>{ e.preventDefault(); dz.classList.add('over'); }));
+  ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{ e.preventDefault(); dz.classList.remove('over'); }));
+  dz.addEventListener('drop', e=>leerArchivos([...e.dataTransfer.files]));
+  dz.querySelector('label').addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); inp.click(); } });
+}
+document.addEventListener('click', async e=>{
+  const el = e.target.closest('[data-act]'); if(!el) return; const act = el.dataset.act;
+  if(act==='meta'){ (S.cursos[S.activo] ||= {}).meta=el.dataset.v; guardarEstado(); render(); }
+  if(act==='cancelar'){ pendientes=null; render(); }
+  if(act==='confirmar'){
+    const nom = ($('#destnom')?.value||pendientes.nuevo||'').trim(); pendientes.nuevo = nom;
+    const antes = new Set(Object.keys(modelos)), tocados = new Set();
+    for(const p of pendientes.packs){ const cid=destinoFinal(p); tocados.add(cid); if(!antes.has(cid) && nom && !p.declCurso) (S.cursosInfo[cid] ||= {}).nombre = nom; await guardarPack(asignar({...p}, cid)); }
+    const n = pendientes.packs.length, nuevo = [...tocados].find(c=>!antes.has(c)); pendientes=null; await recargarCurso();
+    toast(n+' paquete(s) guardados'); if(nuevo){ activar(nuevo); location.hash='#/curso/'+nuevo; } else render();
+  }
+  if(act==='borrar' && confirm('¿Quitar este paquete? Tu progreso se conserva.')){ await borrarPack(el.dataset.k); await recargarCurso(); render(); }
+  if(act==='borrarcurso' && confirm('¿Eliminar este curso con todos sus paquetes Y su progreso? No se puede deshacer.')){
+    const c=el.dataset.c; for(const q of [...packs.values()].filter(q=>q.curso===c)) await borrarPack(q.key);
+    delete S.cursos[c]; delete S.cursosInfo[c]; if(S.activo===c) S.activo=''; await recargarCurso(); render(); }
+});
+window.addEventListener('hashchange', render);
+
+/* ============ 9. APP INSTALABLE (PWA) ============ */
+let DEFER = null, PERSIST = null;
+const estadoApp = () => (matchMedia('(display-mode: standalone)').matches || navigator.standalone ? 'Abierta como app. ' : 'Aún no instalada. ')
+  + (PERSIST ? 'Almacenamiento protegido.' : 'Almacenamiento NO protegido: la app funciona igual, pero exporta tu copia cada semana.');
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); DEFER = e; if(location.hash==='#/perfil') render(); });
+if(navigator.storage?.persist) navigator.storage.persist().then(v=>{ PERSIST=v; const e=$('#pst'); if(e) e.textContent=estadoApp(); }).catch(()=>{});
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+/* ============ 10. ARRANQUE ============ */
+(async function(){
+  aplicarAjustes();
+  _db = await abrirDB();
+  if(!_db) toast('Este navegador no permite guardar el curso; el contenido durará solo esta sesión');
+  await recargarCurso(); render();
+})();
+</script>
+</body>
+</html>
